@@ -1,0 +1,17 @@
+# Copyright (C) 2019-2020 Nurul GC
+# Trademark (TM) 2019 ArtesGC
+# .desktop for linux version
+
+[Desktop Entry]
+Type=Application
+Name=GCrypter
+GenericName=Encrypt & Decrypt Messages
+Comment=GCrypter uma forma simples de manter os seus pensamentos seguros!
+Categories=Security;
+Exec=f"{os.path.abspath(os.curdir)}/GCrypt(PT)"
+Icon=f"{os.path.abspath(os.curdir)}/img/artesgc-512x512.png"
+StartupWMClass=GCrypt(PT)
+Terminal=false
+Name[pt]=GCrypt.desktop
+Path=f"{os.path.abspath(os.curdir)}"
+StartupNotify=true
