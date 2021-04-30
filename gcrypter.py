@@ -153,7 +153,7 @@ Enjoy!
 
 
 class G6R:
-    def __init__(self):a
+    def __init__(self):
         self.janela = QWidget()
         self.janela.setWindowTitle("GCrypter")
         self.janela.setWindowIcon(QIcon("img/gcrypter-icon.png"))
@@ -203,13 +203,11 @@ class G6R:
 
     class PT:
         def __init__(self):
-            self.gc = QApplication(argv)
             self.ferramentas = QWidget()
             self.ferramentas.setFixedSize(600, 400)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
-            # self.ferramentas.setPalette(QPalette(QColor('orange')))
-            self.ferramentas.setStyleSheet("background-color: wheat; font-family: sans-serif; font-size: 10pt;")
+            self.ferramentas.setStyleSheet("background-color: wheat; font-family: cambria; font-size: 10pt;")
 
             menu = QMenuBar(self.ferramentas)
             detalhes = menu.addMenu('&Ajuda')
@@ -221,7 +219,7 @@ class G6R:
             instr.triggered.connect(self.instr)
             detalhes.addSeparator()
 
-            sair_ = lambda: self.gc.exit(0)
+            sair_ = lambda: exit(0)
             sair = detalhes.addAction('&Sair')
             sair.setIcon(QIcon('img/nao2.bmp'))
             sair.triggered.connect(sair_)
@@ -305,14 +303,16 @@ Faça Bom Proveito!
 
             self.utilizador_is = QLineEdit()
             self.utilizador_is.setToolTip('Obrigatório')
-            layout.addRow('<b>Digite Seu &Nome: *</b>', self.utilizador_is)
+            self.utilizador_is.setPlaceholderText('Digite Seu Nome..')
+            layout.addRow(self.utilizador_is)
 
             codigo = QLineEdit()
             codigo.setEchoMode(codigo.PasswordEchoOnEdit)
             codigo.setClearButtonEnabled(True)
             codigo.setToolTip('Obrigatório')
             codigo.returnPressed.connect(iniciar)
-            layout.addRow('<b>Digite Sua &Senha: *</b>', codigo)
+            codigo.setPlaceholderText('Digite Sua Senha..')
+            layout.addRow(codigo)
 
             recuperarSenha = QLabel('<a href="#" style="text-decoration:none;">Esqueceu sua senha?</a>')
             recuperarSenha.setToolTip('Permite-lhe recuperar o seu login atravez da sua resposta especial fornecida no cadastro\nCaso ainda não tenha feito o cadastro, fá-lo já!')
@@ -665,13 +665,11 @@ RESPOSTA: {resposta.text()}"""
 
     class EN:
         def __init__(self):
-            self.gc = QApplication(argv)
             self.ferramentas = QWidget()
             self.ferramentas.setFixedSize(600, 400)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
-            # self.ferramentas.setPalette(QPalette(QColor('orange')))
-            self.ferramentas.setStyleSheet("background-color: wheat; font-family: sans-serif; font-size: 10pt;")
+            self.ferramentas.setStyleSheet("background-color: wheat; font-family: cambria; font-size: 10pt;")
 
             menu = QMenuBar(self.ferramentas)
             detalhes = menu.addMenu('&Help')
@@ -683,7 +681,7 @@ RESPOSTA: {resposta.text()}"""
             instr.triggered.connect(self.instr)
             detalhes.addSeparator()
 
-            sair_ = lambda: self.gc.exit(0)
+            sair_ = lambda: exit(0)
             sair = detalhes.addAction('&Quit')
             sair.setIcon(QIcon('img/nao2.bmp'))
             sair.triggered.connect(sair_)
@@ -768,16 +766,18 @@ Enjoy!
 
             self.utilizador_is = QLineEdit()
             self.utilizador_is.setToolTip('Required')
-            layout.addRow('<b>Type Your &Name: *</b>', self.utilizador_is)
+            self.utilizador_is.setPlaceholderText('Type Your Name..')
+            layout.addRow(self.utilizador_is)
 
             codigo = QLineEdit()
             codigo.setEchoMode(codigo.PasswordEchoOnEdit)
             codigo.setClearButtonEnabled(True)
             codigo.setToolTip('Required')
+            codigo.setPlaceholderText('Type Your Password..')
             codigo.returnPressed.connect(iniciar)
-            layout.addRow('<b>Type Your &Password: *</b>', codigo)
+            layout.addRow(codigo)
 
-            recuperarSenha = QLabel("<a href=\"#\" style=\"text-decoration:none;\">Forgot your password?</a>")
+            recuperarSenha = QLabel('<a href="#" style="text-decoration:none;">Forgot your password?</a>')
             recuperarSenha.setToolTip("Allows you to recover your login through your special answer provided in the registration\nIf you have not yet registered, do so now!")
             recuperarSenha.linkActivated.connect(self.recuperarSenha)
             recuperarSenha.setAlignment(Qt.AlignRight)
@@ -796,7 +796,7 @@ Enjoy!
 
         def cadastro(self):
             janelaCadastro = QDialog(self.ferramentas)
-            janelaCadastro.setPalette(QPalette(QColor('orange')))
+            janelaCadastro.setPalette(QPalette(QColor('wheat')))
             janelaCadastro.setWhatsThis('Registration: allows the user to personalize an account with a name and password!')
             janelaCadastro.setWindowTitle('Register')
             janelaCadastro.setFixedSize(500, 250)
@@ -835,24 +835,28 @@ ANSWER: {resposta.text()}"""
 
             self.utilizador_cd = QLineEdit()
             self.utilizador_cd.setToolTip('Required')
-            layout.addRow('<b>Type your &Name: *</b>', self.utilizador_cd)
+            self.utilizador_cd.setPlaceholderText('Type your Name..')
+            layout.addRow(self.utilizador_cd)
 
             codigo = QLineEdit()
             codigo.setEchoMode(codigo.PasswordEchoOnEdit)
             codigo.setClearButtonEnabled(True)
             codigo.setToolTip('Required')
-            layout.addRow('<b>Type your &Password: *</b>', codigo)
+            codigo.setPlaceholderText('Type your Password..')
+            layout.addRow(codigo)
 
             codigo1 = QLineEdit()
             codigo1.setEchoMode(codigo1.PasswordEchoOnEdit)
             codigo1.setClearButtonEnabled(True)
             codigo1.setToolTip('Required')
+            codigo1.setPlaceholderText('Retype your Password..')
             codigo1.returnPressed.connect(guardar)
-            layout.addRow('<b>Retype your &Password: *</b>', codigo1)
+            layout.addRow(codigo1)
 
             resposta = QLineEdit()
             resposta.setToolTip('Required')
-            layout.addRow('<b>What is the most precious thing you have?</b>', resposta)
+            resposta.setPlaceholderText('What is the most precious thing you have?..')
+            layout.addRow(resposta)
 
             guardar_botao = QPushButton('Enter')
             guardar_botao.setDefault(True)
@@ -1091,8 +1095,8 @@ ANSWER: {resposta.text()}"""
                     file = decrypt(file_[0], file_[1])
 
                 self.moldura_editar = QFrame()
-                self.moldura_editar.setPalette(QPalette(QColor('orange')))
-                self.tab.addTab(self.moldura_editar, 'Editando ArquivoEditing File')
+                self.moldura_editar.setPalette(QPalette(QColor('wheat')))
+                self.tab.addTab(self.moldura_editar, 'Editing File')
                 self.tab.setCurrentWidget(self.moldura_editar)
                 layout = QVBoxLayout()
 
