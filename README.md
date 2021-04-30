@@ -1,6 +1,8 @@
 # Ola Bem-Vindo ao Codificador (GCrypter)
 
-```
+![](img/gcrypter.png)
+
+```txt
 Ele é uma Ferramenta util e Pratica Para Quem Gosta de Manter os Seus Arquivos
 Muito Bem Protegidos Sem Ter que se Preocupar
 Com Possiveis Invasões ou Ate Divulgacões Indesejadas..
@@ -19,23 +21,23 @@ Faca Bom Proveito!**_
 
 # Demonstrações
 
-![inicio-sessao](img/inicio-sessao.png)
-![falha-inicio-sessao](img/falha-inicio-sessao.png)
+![inicio-sessao](img/demo/inicio-sessao.png)
+![falha-inicio-sessao](img/demo/falha-inicio-sessao.png)
 
-![cadastro](img/cadastro.png)
-![sucesso-cadastro](img/sucesso-cadastro.png)
-![recuperar-senha](img/recuperar-senha.png)
+![cadastro](img/demo/cadastro.png)
+![sucesso-cadastro](img/demo/sucesso-cadastro.png)
+![recuperar-senha](img/demo/recuperar-senha.png)
 
-![principal](img/principal.png)
-![procura-cancela](img/procura-cancelada.png)
+![principal](img/demo/principal.png)
+![procura-cancela](img/demo/procura-cancelada.png)
 
-![codificar](img/novo-arquivo.png)
-![erro-codificar](img/erro-guardar.png)
-![sucesso-codificar](img/guardado.png)
-![decodificar](img/ler.png)
-![editar](img/editar.png)
+![codificar](img/demo/novo-arquivo.png)
+![erro-codificar](img/demo/erro-guardar.png)
+![sucesso-codificar](img/demo/guardado.png)
+![decodificar](img/demo/ler.png)
+![editar](img/demo/editar.png)
 
-![sobre](img/sobre.png)
+![sobre](img/demo/sobre.png)
 
 ---
 &copy; 2019-2021 [Nurul Carvalho](mailto:nuruldecarvalho@gmail.com) \
