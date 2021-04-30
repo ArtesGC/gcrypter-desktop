@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['gcrypter_pt.py'],
+a = Analysis(['gcrypter.py'],
              pathex=['./'],
              binaries=[],
              datas=[],
@@ -23,12 +23,12 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='GCrypter(PT)',
+          name='GCrypter',
           debug=True,
           bootloader_ignore_signals=False,
           strip=False,
           upx=False,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False , uac_admin=False,
-          icon='./img/artesgc-512x512.png')
+          console=False , uac_admin=True,
+          icon='img/gcrypter-icon.png')
