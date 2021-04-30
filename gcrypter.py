@@ -736,43 +736,43 @@ Enjoy!
                         else:
                             question = QMessageBox.question(self.ferramentas, 'Login Failed',
                                                             f"Am sorry {self.utilizador_is.text()} You don't have an account yet..\n"
-                                                            f"Registre-se Para Ter Acesso ao Serviço!")
+                                                            f"Register to Access the Service!")
                             if question == 16384:
                                 self.cadastro()
                             elif question == 65536:
                                 return self.gc.exit(0)
                 except FileNotFoundError:
-                    question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
-                                                    f'Lamento {self.utilizador_is.text()} Você Ainda Não Tem Uma Conta Criada..\n'
-                                                    f'Registre-se Para Ter Acesso ao Serviço!')
+                    question = QMessageBox.question(self.ferramentas, 'Login Failed',
+                                                    f"Am sorry {self.utilizador_is.text()} You don't have an account yet..\n"
+                                                    f"Register to Access the Service!")
                     if question == 16384:
                         self.cadastro()
                     elif question == 65536:
                         return self.gc.exit(0)
 
             self.utilizador_is = QLineEdit()
-            self.utilizador_is.setToolTip('Obrigatório')
-            layout.addRow('<b>Digite Seu &Nome: *</b>', self.utilizador_is)
+            self.utilizador_is.setToolTip('Required')
+            layout.addRow('<b>Type Your &Name: *</b>', self.utilizador_is)
 
             codigo = QLineEdit()
             codigo.setEchoMode(codigo.PasswordEchoOnEdit)
             codigo.setClearButtonEnabled(True)
-            codigo.setToolTip('Obrigatório')
+            codigo.setToolTip('Required')
             codigo.returnPressed.connect(iniciar)
-            layout.addRow('<b>Digite Sua &Senha: *</b>', codigo)
+            layout.addRow('<b>Type Your &Password: *</b>', codigo)
 
-            recuperarSenha = QLabel('<a href="#" style="text-decoration:none;">Esqueceu sua senha?</a>')
-            recuperarSenha.setToolTip('Permite-lhe recuperar o seu login atravez da sua resposta especial fornecida no cadastro\nCaso ainda não tenha feito o cadastro, fá-lo já!')
+            recuperarSenha = QLabel("<a href=\"#\" style=\"text-decoration:none;\">Forgot your password?</a>")
+            recuperarSenha.setToolTip("Allows you to recover your login through your special answer provided in the registration\nIf you have not yet registered, do so now!")
             recuperarSenha.linkActivated.connect(self.recuperarSenha)
             recuperarSenha.setAlignment(Qt.AlignRight)
             layout.addWidget(recuperarSenha)
 
-            iniciar_botao = QPushButton('Entrar')
+            iniciar_botao = QPushButton('Enter')
             iniciar_botao.clicked.connect(iniciar)
             iniciar_botao.setDefault(True)
             layout.addRow(iniciar_botao)
 
-            cadastro_botao = QPushButton('Cadastrar')
+            cadastro_botao = QPushButton('Register')
             cadastro_botao.clicked.connect(self.cadastro)
             layout.addRow(cadastro_botao)
 
@@ -780,19 +780,19 @@ Enjoy!
 
         def cadastro(self):
             janelaCadastro = QDialog(self.ferramentas)
-            janelaCadastro.setPalette(QPalette(QColor('Wheat')))
-            janelaCadastro.setWhatsThis('Cadastro: permite ao usuario personalizar uma conta com nome e senha!')
-            janelaCadastro.setWindowTitle('Cadastro')
+            janelaCadastro.setPalette(QPalette(QColor('orange')))
+            janelaCadastro.setWhatsThis('Registration: allows the user to personalize an account with a name and password!')
+            janelaCadastro.setWindowTitle('Register')
             janelaCadastro.setFixedSize(500, 250)
             layout = QFormLayout()
             layout.setSpacing(5)
 
             def guardar():
                 if self.utilizador_cd.text() == '' and codigo.text() == '':
-                    QMessageBox.warning(self.ferramentas, 'Cadastro', 'Você Deve Preencher os Seus Dados Antes de Entrar..')
+                    QMessageBox.warning(self.ferramentas, 'Register', 'Você Deve Preencher os Seus Dados Antes de Entrar..')
                 else:
                     if codigo.text() != codigo1.text():
-                        QMessageBox.warning(self.ferramentas, 'Cadastro', f'Lamento {self.utilizador_cd.text()} os Códigos Não Correspondem..')
+                        QMessageBox.warning(self.ferramentas, 'Register', f'Lamento {self.utilizador_cd.text()} os Códigos Não Correspondem..')
                     else:
                         if not os.path.exists(f'G6r-{self.utilizador_cd.text()}'):
                             os.mkdir(f'G6r-{self.utilizador_cd.text()}')
