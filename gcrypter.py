@@ -242,7 +242,7 @@ Faça Bom Proveito!
 
         def inicio_sessao(self):
             janelaInicio = QWidget()
-            self.tab.addTab(janelaInicio, 'Inicio Sessao')
+            self.tab.addTab(janelaInicio, 'Inicio Sessão')
             # janelaInicio.setPalette(QPalette(QColor('Wheat')))
             layout = QFormLayout()
             layout.setSpacing(15)
