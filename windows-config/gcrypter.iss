@@ -35,6 +35,7 @@ UsedUserAreasWarning=no
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=D:\Projectos\GCrypter\dist
 OutputBaseFilename=gcrypter_0.7-042021
+SetupIconFile="D:\Projectos\GCrypter\img\gcrypter-256x256.ico"
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
