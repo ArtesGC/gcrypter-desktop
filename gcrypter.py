@@ -2,7 +2,7 @@
 #  Direitos Autorais (c) 2019-2020 Nurul GC
 #
 #  Jovem Programador
-#  Estudante de Engenharia de Telecomunicaçoes
+#  Estudante de Engenharia de Telecomunicações
 #  Tecnologia de Informação e de Medicina.
 #  Foco Fé Força Paciência
 #  Allah no Comando.
@@ -215,13 +215,11 @@ class G6R:
             sobre.triggered.connect(self.hello)
 
             instr = detalhes.addAction('&Instruções')
-            instr.setIcon(QIcon('img/info.bmp'))
             instr.triggered.connect(self.instr)
             detalhes.addSeparator()
 
             sair_ = lambda: exit(0)
             sair = detalhes.addAction('&Sair')
-            sair.setIcon(QIcon('img/nao2.bmp'))
             sair.triggered.connect(sair_)
 
             self.tab = QTabWidget(self.ferramentas)
@@ -333,7 +331,7 @@ Faça Bom Proveito!
 
         def cadastro(self):
             janelaCadastro = QDialog(self.ferramentas)
-            janelaCadastro.setPalette(QPalette(QColor('orange')))
+            janelaCadastro.setPalette(QPalette(QColor('wheat')))
             janelaCadastro.setWhatsThis('Cadastro: permite ao usuario personalizar uma conta com nome e senha!')
             janelaCadastro.setWindowTitle('Cadastro')
             janelaCadastro.setFixedSize(500, 250)
@@ -372,24 +370,28 @@ RESPOSTA: {resposta.text()}"""
 
             self.utilizador_cd = QLineEdit()
             self.utilizador_cd.setToolTip('Obrigatório')
-            layout.addRow('<b>Digite Seu &Nome: *</b>', self.utilizador_cd)
+            self.utilizador_cd.setPlaceholderText('Digite Seu Nome..')
+            layout.addRow(self.utilizador_cd)
 
             codigo = QLineEdit()
             codigo.setEchoMode(codigo.PasswordEchoOnEdit)
             codigo.setClearButtonEnabled(True)
             codigo.setToolTip('Obrigatório')
-            layout.addRow('<b>Digite Sua &Senha: *</b>', codigo)
+            codigo.setPlaceholderText('Digite Sua Senha..')
+            layout.addRow(codigo)
 
             codigo1 = QLineEdit()
             codigo1.setEchoMode(codigo1.PasswordEchoOnEdit)
             codigo1.setClearButtonEnabled(True)
             codigo1.setToolTip('Obrigatório')
+            codigo1.setPlaceholderText('Redigite Sua Senha..')
             codigo1.returnPressed.connect(guardar)
-            layout.addRow('<b>Redigite Sua &Senha: *</b>', codigo1)
+            layout.addRow(codigo1)
 
             resposta = QLineEdit()
             resposta.setToolTip('Obrigatório')
-            layout.addRow('<b>Qual é a coisa mais preciosa que você possui?</b>', resposta)
+            resposta.setPlaceholderText('Digite o nome da coisa mais preciosa que você possui..')
+            layout.addRow(resposta)
 
             guardar_botao = QPushButton('Entrar')
             guardar_botao.setDefault(True)
@@ -400,7 +402,7 @@ RESPOSTA: {resposta.text()}"""
 
         def recuperarSenha(self):
             janela_recuperarSenha = QDialog(self.ferramentas)
-            janela_recuperarSenha.setPalette(QPalette(QColor('orange')))
+            janela_recuperarSenha.setPalette(QPalette(QColor('wheat')))
             janela_recuperarSenha.setWhatsThis("Sobre: Recuperação da sessão do úsuario!\n"
                                                "Poderá sempre iniciar sessão atravez desta opção caso esqueça permanentemente a sua senha..")
             janela_recuperarSenha.setWindowTitle('Recuperar Senha')
@@ -415,11 +417,13 @@ RESPOSTA: {resposta.text()}"""
 
             nome = QLineEdit()
             nome.setToolTip('Obrigatório')
-            layout.addRow('<b>Digite o seu &Nome: *</b>', nome)
+            nome.setPlaceholderText('Digite o seu Nome..')
+            layout.addRow(nome)
 
             resposta = QLineEdit()
             resposta.setToolTip('Obrigatório')
-            layout.addRow('<b>Qual é a coisa mais preciosa que você possui?</b>', resposta)
+            resposta.setPlaceholderText('Digite o nome da coisa mais preciosa que você possui..')
+            layout.addRow(resposta)
 
             def iniciar():
                 try:
@@ -470,7 +474,7 @@ RESPOSTA: {resposta.text()}"""
 
         def main_c9r(self):
             self.moldura_main = QFrame()
-            self.moldura_main.setPalette(QPalette(QColor('orange')))
+            self.moldura_main.setPalette(QPalette(QColor('wheat')))
             self.tab.addTab(self.moldura_main, 'Bem-Vindo')
             self.tab.setCurrentWidget(self.moldura_main)
 
@@ -533,13 +537,15 @@ RESPOSTA: {resposta.text()}"""
             titulo = QLineEdit()
             titulo.setAlignment(Qt.AlignCenter)
             titulo.setToolTip('Obrigatório')
-            hl.addRow('<b>Digite um &Nome para o Arquivo: *</b>', titulo)
+            titulo.setPlaceholderText('Digite um nome para o Arquivo..')
+            hl.addRow(titulo)
             layout.addLayout(hl)
 
             texto = QTextEdit()
             texto.setFont(QFont('cambria', 12))
             texto.setAcceptRichText(True)
             texto.setAcceptDrops(True)
+            texto.setPlaceholderText(f'Em que estas a pensar {self.utilizador_is.text()}..')
             layout.addWidget(texto)
 
             def guardar():
@@ -587,14 +593,14 @@ RESPOSTA: {resposta.text()}"""
                 return self.decodificar()
 
         def decodificar(self):
-            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador_is.text()}', filter='Ficheiros (*.gc)')
+            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador_is.text()}', filter='Ficheiros (*.gc)', caption='Selecione o arquivo')
             try:
                 with open(nome_file_open[0], 'r+') as file_decod:
                     file_ = file_decod.readlines()
                     file = decrypt(file_[0], file_[1])
 
                 self.moldura_decod = QFrame()
-                self.moldura_decod.setPalette(QPalette(QColor('orange')))
+                self.moldura_decod.setPalette(QPalette(QColor('wheat')))
                 self.tab.addTab(self.moldura_decod, 'Lendo Arquivo')
                 self.tab.setCurrentWidget(self.moldura_decod)
                 layout = QVBoxLayout()
@@ -620,7 +626,7 @@ RESPOSTA: {resposta.text()}"""
 
         def editar(self):
             self.utilizador = (self.utilizador_is.text() or self.utilizador_cd.text())
-            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador}', filter='Ficheiros (*.gc)')
+            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador}', filter='Ficheiros (*.gc)', caption='Selecione o arquivo')
             try:
                 with open(nome_file_open[0], 'r+') as file_decod:
                     file_ = file_decod.readlines()
@@ -677,13 +683,11 @@ RESPOSTA: {resposta.text()}"""
             sobre.triggered.connect(self.hello)
 
             instr = detalhes.addAction('&Instructions')
-            instr.setIcon(QIcon('img/info.bmp'))
             instr.triggered.connect(self.instr)
             detalhes.addSeparator()
 
             sair_ = lambda: exit(0)
             sair = detalhes.addAction('&Quit')
-            sair.setIcon(QIcon('img/nao2.bmp'))
             sair.triggered.connect(sair_)
 
             self.tab = QTabWidget(self.ferramentas)
@@ -855,7 +859,7 @@ ANSWER: {resposta.text()}"""
 
             resposta = QLineEdit()
             resposta.setToolTip('Required')
-            resposta.setPlaceholderText('What is the most precious thing you have?..')
+            resposta.setPlaceholderText('Type the name of the most precious thing you have..')
             layout.addRow(resposta)
 
             guardar_botao = QPushButton('Enter')
@@ -867,7 +871,7 @@ ANSWER: {resposta.text()}"""
 
         def recuperarSenha(self):
             janela_recuperarSenha = QDialog(self.ferramentas)
-            janela_recuperarSenha.setPalette(QPalette(QColor('orange')))
+            janela_recuperarSenha.setPalette(QPalette(QColor('wheat')))
             janela_recuperarSenha.setWhatsThis("About: User session recovery!\n"
                                                "You can always log in using this option if you permanently forget your password..")
             janela_recuperarSenha.setWindowTitle('Recover Password')
@@ -882,11 +886,13 @@ ANSWER: {resposta.text()}"""
 
             nome = QLineEdit()
             nome.setToolTip('Required')
-            layout.addRow('<b>Type your &Name: *</b>', nome)
+            nome.setPlaceholderText('Type your Name..')
+            layout.addRow(nome)
 
             resposta = QLineEdit()
             resposta.setToolTip('Required')
-            layout.addRow('<b>What is the most precious thing you have?</b>', resposta)
+            resposta.setPlaceholderText('Type the name of the most precious thing you have..')
+            layout.addRow(resposta)
 
             def iniciar():
                 try:
@@ -937,7 +943,7 @@ ANSWER: {resposta.text()}"""
 
         def main_c9r(self):
             self.moldura_main = QFrame()
-            self.moldura_main.setPalette(QPalette(QColor('orange')))
+            self.moldura_main.setPalette(QPalette(QColor('wheat')))
             self.tab.addTab(self.moldura_main, 'Welcome')
             self.tab.setCurrentWidget(self.moldura_main)
 
@@ -991,7 +997,7 @@ ANSWER: {resposta.text()}"""
 
         def codificar(self):
             self.moldura_cod = QFrame()
-            self.moldura_cod.setPalette(QPalette(QColor('orange')))
+            self.moldura_cod.setPalette(QPalette(QColor('wheat')))
             self.tab.addTab(self.moldura_cod, 'New File')
             self.tab.setCurrentWidget(self.moldura_cod)
 
@@ -1001,13 +1007,15 @@ ANSWER: {resposta.text()}"""
             titulo = QLineEdit()
             titulo.setAlignment(Qt.AlignCenter)
             titulo.setToolTip('Required')
-            hl.addRow('<b>Enter a &Name for the File: *</b>', titulo)
+            titulo.setPlaceholderText('Enter a name for the File..')
+            hl.addRow(titulo)
             layout.addLayout(hl)
 
             texto = QTextEdit()
             texto.setFont(QFont('cambria', 12))
             texto.setAcceptRichText(True)
             texto.setAcceptDrops(True)
+            texto.setPlaceholderText(f'What are you thinking {self.utilizador_is.text()}..')
             layout.addWidget(texto)
 
             def guardar():
@@ -1055,14 +1063,14 @@ ANSWER: {resposta.text()}"""
                 return self.decodificar()
 
         def decodificar(self):
-            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador_is.text()}', filter='Files (*.gc)')
+            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador_is.text()}', filter='Files (*.gc)', caption='Select the file')
             try:
                 with open(nome_file_open[0], 'r+') as file_decod:
                     file_ = file_decod.readlines()
                     file = decrypt(file_[0], file_[1])
 
                 self.moldura_decod = QFrame()
-                self.moldura_decod.setPalette(QPalette(QColor('orange')))
+                self.moldura_decod.setPalette(QPalette(QColor('wheat')))
                 self.tab.addTab(self.moldura_decod, 'Reading File')
                 self.tab.setCurrentWidget(self.moldura_decod)
                 layout = QVBoxLayout()
@@ -1088,7 +1096,7 @@ ANSWER: {resposta.text()}"""
 
         def editar(self):
             self.utilizador = (self.utilizador_is.text() or self.utilizador_cd.text())
-            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador}', filter='Files (*.gc)')
+            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador}', filter='Files (*.gc)', caption='Select the file')
             try:
                 with open(nome_file_open[0], 'r+') as file_decod:
                     file_ = file_decod.readlines()
