@@ -12,6 +12,7 @@ Comment=encode and decode your thoughts easily
 Encoding=UTF-8
 Categories=Security;Utility;TextEditor;
 MimeType=application/x-gc;
+Path=/usr/share/gcrypter/
 Exec=/usr/share/gcrypter/GCrypter
 Icon=/usr/share/gcrypter/img/gcrypter-icon.png
 StartupWMClass=GCrypt(PT)
