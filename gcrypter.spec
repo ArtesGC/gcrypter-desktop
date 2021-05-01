@@ -31,4 +31,4 @@ exe = EXE(pyz,
           upx_exclude=[],
           runtime_tmpdir=None,
           console=False , uac_admin=True,
-          icon='img/gcrypter-icon.png')
+          icon='img/gcrypter-256x256.ico')
