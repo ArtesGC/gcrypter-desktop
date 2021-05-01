@@ -5,13 +5,15 @@
 [Desktop Entry]
 Type=Application
 Name=GCrypter
+Version=0.7
 GenericName=Encrypt & Decrypt Messages
-Comment=GCrypter uma forma simples de manter os seus pensamentos seguros!
-Categories=Security;
-Exec=f"{os.path.abspath(os.curdir)}/GCrypt(PT)"
-Icon=f"{os.path.abspath(os.curdir)}/img/artesgc-512x512.png"
+Comment[PT]=GCrypter uma forma simples de manter os seus pensamentos seguros!
+Comment=encode and decode your thoughts easily
+Encoding=UTF-8
+Categories=Security;Utility;TextEditor;
+MimeType=application/x-gc;
+Exec=/usr/share/gcrypter/GCrypter
+Icon=/usr/share/gcrypter/img/gcrypter-icon.png
 StartupWMClass=GCrypt(PT)
 Terminal=false
-Name[pt]=GCrypt.desktop
-Path=f"{os.path.abspath(os.curdir)}"
 StartupNotify=true

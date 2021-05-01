@@ -1,0 +1,8 @@
+Package: gcrypter
+Version: 0.7
+Maintainer: ArtesGC <nuruldecarvalho@gmail.com>
+Section: text
+Architecture: amd64
+Priority: standard
+Description: encoder and decoder
+ allow you to encode and decode your thoughts
