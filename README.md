@@ -1,43 +1,51 @@
-# Ola Bem-Vindo ao Codificador (GCrypter)
+# Hello Welcome to the (GCrypter)
 
-![](img/gcrypter.png)
+![gcrypter-icon](img/gcrypter.png)
 
 ```txt
-Ele é uma Ferramenta util e Pratica Para Quem Gosta de Manter os Seus Arquivos
-Muito Bem Protegidos Sem Ter que se Preocupar
-Com Possiveis Invasões ou Ate Divulgacões Indesejadas..
+It is a useful and practical tool for those
+who like to keep their files very well protected
+without having to worry about possible invasions
+or even unwanted disclosures.
 
-- O Codificador (GCrypter) lhe Oferece Opcões e um Ambiente Simples
-    Para que Você como Utilizador Final Possa Registrar os Seus Pensamentos,
-    Dados e Anotacões, Guardando-os Posteriormente CODIFICADOS..
-- Nele Tambem Esta a Opcão de DECODIFICACÃO dos Mesmos Arquivos..
-- E até a opcão de EDICÃO dos arquivos já criados..
+- The encoder (GCrypter) offers you options and a simple environment
+for you as a user Final You can register your thoughts,
+data and notes, keeping them afterwards ENCODED ..
+- There is also the DECODING option for the same files ..
+- And even the EDITION option of the files already created ..
 ```
 
-_**Muito Obrigado Pelo Apoio! \
-Faca Bom Proveito!**_
+_**Thank you very much for your support! \
+Enjoy!**_
 
 ---
+# Demos
 
-# Demonstrações
+## English
 
-![inicio-sessao](img/demo/inicio-sessao.png)
-![falha-inicio-sessao](img/demo/falha-inicio-sessao.png)
+![intro](img/demo/intro.png)
+![fail-intro](img/demo/erro1.png)
+![in-en](img/demo/in-en.png)
+![hemo-session-en](img/demo/homesession-en.png)
+![recover-pass-en](img/demo/recoverpass-en.png)
+![register-en](img/demo/register-en.png)
+![welcome-en](img/demo/welcomepage-en.png)
+![encode-en](img/demo/encode-en.png)
+![about-en](img/demo/about-en.png)
+![instr-en](img/demo/instr-en.png)
 
-![cadastro](img/demo/cadastro.png)
-![sucesso-cadastro](img/demo/sucesso-cadastro.png)
-![recuperar-senha](img/demo/recuperar-senha.png)
+## Portugues
 
-![principal](img/demo/principal.png)
-![procura-cancela](img/demo/procura-cancelada.png)
-
-![codificar](img/demo/novo-arquivo.png)
-![erro-codificar](img/demo/erro-guardar.png)
-![sucesso-codificar](img/demo/guardado.png)
-![decodificar](img/demo/ler.png)
-![editar](img/demo/editar.png)
-
-![sobre](img/demo/sobre.png)
+![intro](img/demo/intro.png)
+![fail-intro](img/demo/erro1.png)
+![in-pt](img/demo/in-pt.png)
+![hemo-session-pt](img/demo/homesession-pt.png)
+![recover-pass-pt](img/demo/recoverpass-pt.png)
+![register-pt](img/demo/register-pt.png)
+![welcome-pt](img/demo/welcomepage-pt.png)
+![encode-pt](img/demo/encode-pt.png)
+![about-pt](img/demo/about-pt.png)
+![instr-pt](img/demo/instr-pt.png)
 
 ---
 &copy; 2019-2021 [Nurul Carvalho](mailto:nuruldecarvalho@gmail.com) \
