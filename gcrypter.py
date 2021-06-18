@@ -60,7 +60,7 @@ class EditarFicheiroExterno:
         self.ferramentas.setFixedSize(500, 400)
         self.ferramentas.setWindowTitle(f'GCrypter - Edit - {self.ficheiroExterno}')
         self.ferramentas.setWindowIcon(QIcon(f'img/gcrypter-icon.png'))
-        self.ferramentas.setPalette(QPalette(QColor('orange')))
+        self.ferramentas.setPalette(QPalette(QColor('black')))
         self.caixa_mensagem = QMessageBox()
 
         # secção do menu
@@ -139,7 +139,7 @@ Enjoy!
                 self.tab.removeTab(self.tab.currentIndex())
                 self.main0()
 
-            guardar_botao = QPushButton('Save (Rencoded)')
+            guardar_botao = QPushButton('Save')
             guardar_botao.clicked.connect(guardar)
             layout.addWidget(guardar_botao)
 
@@ -157,7 +157,9 @@ class G6R:
         self.janela = QWidget()
         self.janela.setWindowTitle("GCrypter")
         self.janela.setWindowIcon(QIcon("img/gcrypter-icon.png"))
-        self.janela.setStyleSheet('background-color: wheat; color: black;')
+        self.janela.setStyleSheet('QWidget{background-color: black; color: wheat;}'
+                                  'QComboBox{border-color: white;}'
+                                  'QProgressBar{background-color: orange;}')
 
         layout = QVBoxLayout()
 
@@ -185,8 +187,8 @@ class G6R:
         if self.idiomas.currentText() == 'English':
             while n < 101:
                 self.barraIniciar.setValue(n)
-                sleep(0.3)
-                n += 2
+                sleep(0.5)
+                n += 5
             self.janela.destroy()
             app = G6R.EN()
             app.ferramentas.show()
@@ -207,7 +209,10 @@ class G6R:
             self.ferramentas.setFixedSize(600, 400)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
-            self.ferramentas.setStyleSheet("background-color: wheat; font-family: cambria; font-size: 10pt;")
+            self.ferramentas.setStyleSheet("QWidget QFrame {background-color: black; color: wheat; font-family: cambria; font-size: 10pt;}"
+                                           "QMenu::item:selected {background:rgb(115, 115, 115);}"
+                                           "QTextEdit{background-color: orange; color: black;}"
+                                           "QLineEdit{background-color: orange; color: black;}")
 
             menu = QMenuBar(self.ferramentas)
             detalhes = menu.addMenu('&Ajuda')
@@ -312,7 +317,7 @@ Faça Bom Proveito!
             codigo.setPlaceholderText('Digite Sua Senha..')
             layout.addRow(codigo)
 
-            recuperarSenha = QLabel('<a href="#" style="text-decoration:none;">Esqueceu sua senha?</a>')
+            recuperarSenha = QLabel('<a href="#" style="text-decoration:none; color: white;">Esqueceu sua senha?</a>')
             recuperarSenha.setToolTip('Permite-lhe recuperar o seu login atravez da sua resposta especial fornecida no cadastro\nCaso ainda não tenha feito o cadastro, fá-lo já!')
             recuperarSenha.linkActivated.connect(self.recuperarSenha)
             recuperarSenha.setAlignment(Qt.AlignRight)
@@ -331,7 +336,6 @@ Faça Bom Proveito!
 
         def cadastro(self):
             janelaCadastro = QDialog(self.ferramentas)
-            janelaCadastro.setPalette(QPalette(QColor('wheat')))
             janelaCadastro.setWhatsThis('Cadastro: permite ao usuario personalizar uma conta com nome e senha!')
             janelaCadastro.setWindowTitle('Cadastro')
             janelaCadastro.setFixedSize(500, 250)
@@ -402,7 +406,6 @@ RESPOSTA: {resposta.text()}"""
 
         def recuperarSenha(self):
             janela_recuperarSenha = QDialog(self.ferramentas)
-            janela_recuperarSenha.setPalette(QPalette(QColor('wheat')))
             janela_recuperarSenha.setWhatsThis("Sobre: Recuperação da sessão do úsuario!\n"
                                                "Poderá sempre iniciar sessão atravez desta opção caso esqueça permanentemente a sua senha..")
             janela_recuperarSenha.setWindowTitle('Recuperar Senha')
@@ -474,7 +477,6 @@ RESPOSTA: {resposta.text()}"""
 
         def main_c9r(self):
             self.moldura_main = QFrame()
-            self.moldura_main.setPalette(QPalette(QColor('wheat')))
             self.tab.addTab(self.moldura_main, 'Bem-Vindo')
             self.tab.setCurrentWidget(self.moldura_main)
 
@@ -505,7 +507,7 @@ RESPOSTA: {resposta.text()}"""
             layout.addRow(editar_botao)
 
             browser = lambda p: webbrowser.open('https://artesgc.home.blog')
-            rotulo2 = QLabel("<a href='#' style='text-decoration:none;'>ArtesGC, Inc.</a>")
+            rotulo2 = QLabel("<a href='#' style='text-decoration:none; color: white;'>ArtesGC, Inc.</a>")
             rotulo2.setAlignment(Qt.AlignRight)
             rotulo2.setToolTip('Acesso a pagina oficial da ArtesGC!')
             rotulo2.linkActivated.connect(browser)
@@ -527,7 +529,6 @@ RESPOSTA: {resposta.text()}"""
 
         def codificar(self):
             self.moldura_cod = QFrame()
-            self.moldura_cod.setPalette(QPalette(QColor('orange')))
             self.tab.addTab(self.moldura_cod, 'Novo Arquivo')
             self.tab.setCurrentWidget(self.moldura_cod)
 
@@ -567,7 +568,8 @@ RESPOSTA: {resposta.text()}"""
                     self.main0()
 
             hl = QHBoxLayout()
-            guardar_botao = QPushButton('Guardar (Codificado)')
+            guardar_botao = QPushButton('Guardar')
+            guardar_botao.setToolTip('Codificado')
             guardar_botao.clicked.connect(guardar)
             guardar_botao.setDefault(True)
             hl.addWidget(guardar_botao)
@@ -600,7 +602,6 @@ RESPOSTA: {resposta.text()}"""
                     file = decrypt(file_[0], file_[1])
 
                 self.moldura_decod = QFrame()
-                self.moldura_decod.setPalette(QPalette(QColor('wheat')))
                 self.tab.addTab(self.moldura_decod, 'Lendo Arquivo')
                 self.tab.setCurrentWidget(self.moldura_decod)
                 layout = QVBoxLayout()
@@ -633,7 +634,6 @@ RESPOSTA: {resposta.text()}"""
                     file = decrypt(file_[0], file_[1])
 
                 self.moldura_editar = QFrame()
-                self.moldura_editar.setPalette(QPalette(QColor('orange')))
                 self.tab.addTab(self.moldura_editar, 'Editando Arquivo')
                 self.tab.setCurrentWidget(self.moldura_editar)
                 layout = QVBoxLayout()
@@ -675,7 +675,11 @@ RESPOSTA: {resposta.text()}"""
             self.ferramentas.setFixedSize(600, 400)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
-            self.ferramentas.setStyleSheet("background-color: wheat; font-family: cambria; font-size: 10pt;")
+            self.ferramentas.setStyleSheet("QWidget QFrame {background-color: black; color: wheat; font-family: cambria; font-size: 10pt;}"
+                                           "QMenu::item:selected {background:rgb(115, 115, 115);}"
+                                           "QTextEdit{background-color: orange; color: black;}"
+                                           "QLineEdit{background-color: orange; color: black;}"
+                                           "QLabel a {color: white;}")
 
             menu = QMenuBar(self.ferramentas)
             detalhes = menu.addMenu('&Help')
