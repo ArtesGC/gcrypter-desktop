@@ -19,6 +19,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+appTheme = open('themes/gc-manjaromix.qss').read().strip()
+
 
 def verificarData(frase: str):
     """funcao para extrair a data de um texto
@@ -60,7 +62,7 @@ class EditarFicheiroExterno:
         self.ferramentas.setFixedSize(500, 400)
         self.ferramentas.setWindowTitle(f'GCrypter - Edit - {self.ficheiroExterno}')
         self.ferramentas.setWindowIcon(QIcon(f'img/gcrypter-icon.png'))
-        self.ferramentas.setPalette(QPalette(QColor('black')))
+        self.ferramentas.setStyleSheet(appTheme)
         self.caixa_mensagem = QMessageBox()
 
         # secção do menu
@@ -157,9 +159,7 @@ class G6R:
         self.janela = QWidget()
         self.janela.setWindowTitle("GCrypter")
         self.janela.setWindowIcon(QIcon("img/gcrypter-icon.png"))
-        self.janela.setStyleSheet('QWidget{background-color: black; color: wheat;}'
-                                  'QComboBox{border-color: white;}'
-                                  'QProgressBar{background-color: orange;}')
+        self.janela.setStyleSheet(appTheme)
 
         layout = QVBoxLayout()
 
@@ -206,13 +206,10 @@ class G6R:
     class PT:
         def __init__(self):
             self.ferramentas = QWidget()
-            self.ferramentas.setFixedSize(600, 400)
+            self.ferramentas.setFixedSize(600, 600)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
-            self.ferramentas.setStyleSheet("QWidget QFrame {background-color: black; color: wheat; font-family: cambria; font-size: 10pt;}"
-                                           "QMenu::item:selected {background:rgb(115, 115, 115);}"
-                                           "QTextEdit{background-color: orange; color: black;}"
-                                           "QLineEdit{background-color: orange; color: black;}")
+            self.ferramentas.setStyleSheet(appTheme)
 
             menu = QMenuBar(self.ferramentas)
             detalhes = menu.addMenu('&Ajuda')
@@ -228,7 +225,7 @@ class G6R:
             sair.triggered.connect(sair_)
 
             self.tab = QTabWidget(self.ferramentas)
-            self.tab.setGeometry(0, 25, 600, 380)
+            self.tab.setGeometry(0, 25, 600, 580)
 
             self.moldura_main = None
             self.moldura_editar = None
@@ -243,7 +240,7 @@ class G6R:
         def hello(self):
             QMessageBox.information(self.ferramentas, "Sobre", """
 Nome: GCrypter
-Versão: 0.7.042021
+Versão: 0.8.072021
 Designer & Programador: Nurul GC
 Empresa: ArtesGC, Inc.
 """)
@@ -275,7 +272,7 @@ Faça Bom Proveito!
             layout.setSpacing(15)
 
             image = QLabel()
-            image.setPixmap(QPixmap("img/alhamdulillah2.jpg"))
+            image.setPixmap(QPixmap("img/03.png"))
             image.setAlignment(Qt.AlignCenter)
             layout.addRow(image)
 
@@ -291,22 +288,22 @@ Faça Bom Proveito!
                             question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
                                                             f'Lamento {self.utilizador_is.text()} Você Ainda Não Tem Uma Conta Criada..\n'
                                                             f'Registre-se Para Ter Acesso ao Serviço!')
-                            if question == 16384:
+                            if question == QMessageBox.Yes:
                                 self.cadastro()
-                            elif question == 65536:
+                            elif question == QMessageBox.No:
                                 return exit(0)
                 except FileNotFoundError:
                     question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
                                                     f'Lamento {self.utilizador_is.text()} Você Ainda Não Tem Uma Conta Criada..\n'
                                                     f'Registre-se Para Ter Acesso ao Serviço!')
-                    if question == 16384:
+                    if question == QMessageBox.Yes:
                         self.cadastro()
-                    elif question == 65536:
+                    elif question == QMessageBox.No:
                         return exit(0)
 
             self.utilizador_is = QLineEdit()
             self.utilizador_is.setToolTip('Obrigatório')
-            self.utilizador_is.setPlaceholderText('Digite Seu Nome..')
+            self.utilizador_is.setPlaceholderText('Digite o Seu Nome..')
             layout.addRow(self.utilizador_is)
 
             codigo = QLineEdit()
@@ -314,10 +311,10 @@ Faça Bom Proveito!
             codigo.setClearButtonEnabled(True)
             codigo.setToolTip('Obrigatório')
             codigo.returnPressed.connect(iniciar)
-            codigo.setPlaceholderText('Digite Sua Senha..')
+            codigo.setPlaceholderText('Digite a Sua Senha..')
             layout.addRow(codigo)
 
-            recuperarSenha = QLabel('<a href="#" style="text-decoration:none; color: white;">Esqueceu sua senha?</a>')
+            recuperarSenha = QLabel('<a href="#" style="text-decoration:none; color: white;">Esqueceu a sua senha?</a>')
             recuperarSenha.setToolTip('Permite-lhe recuperar o seu login atravez da sua resposta especial fornecida no cadastro\nCaso ainda não tenha feito o cadastro, fá-lo já!')
             recuperarSenha.linkActivated.connect(self.recuperarSenha)
             recuperarSenha.setAlignment(Qt.AlignRight)
@@ -338,9 +335,9 @@ Faça Bom Proveito!
             janelaCadastro = QDialog(self.ferramentas)
             janelaCadastro.setWhatsThis('Cadastro: permite ao usuario personalizar uma conta com nome e senha!')
             janelaCadastro.setWindowTitle('Cadastro')
-            janelaCadastro.setFixedSize(500, 250)
+            janelaCadastro.setFixedSize(500, 500)
             layout = QFormLayout()
-            layout.setSpacing(5)
+            layout.setSpacing(10)
 
             def guardar():
                 if self.utilizador_cd.text() == '' and codigo.text() == '':
@@ -368,27 +365,27 @@ RESPOSTA: {resposta.text()}"""
                                                 f"agora inicie sessão para disfrutar do programa..")
 
             image = QLabel()
-            image.setPixmap(QPixmap("img/Deus.jpg"))
+            image.setPixmap(QPixmap("img/01.jpg"))
             image.setAlignment(Qt.AlignCenter)
             layout.addRow(image)
 
             self.utilizador_cd = QLineEdit()
             self.utilizador_cd.setToolTip('Obrigatório')
-            self.utilizador_cd.setPlaceholderText('Digite Seu Nome..')
+            self.utilizador_cd.setPlaceholderText('Digite o Seu Nome..')
             layout.addRow(self.utilizador_cd)
 
             codigo = QLineEdit()
             codigo.setEchoMode(codigo.PasswordEchoOnEdit)
             codigo.setClearButtonEnabled(True)
             codigo.setToolTip('Obrigatório')
-            codigo.setPlaceholderText('Digite Sua Senha..')
+            codigo.setPlaceholderText('Digite a Sua Senha..')
             layout.addRow(codigo)
 
             codigo1 = QLineEdit()
             codigo1.setEchoMode(codigo1.PasswordEchoOnEdit)
             codigo1.setClearButtonEnabled(True)
             codigo1.setToolTip('Obrigatório')
-            codigo1.setPlaceholderText('Redigite Sua Senha..')
+            codigo1.setPlaceholderText('Redigite a Sua Senha..')
             codigo1.returnPressed.connect(guardar)
             layout.addRow(codigo1)
 
@@ -409,12 +406,12 @@ RESPOSTA: {resposta.text()}"""
             janela_recuperarSenha.setWhatsThis("Sobre: Recuperação da sessão do úsuario!\n"
                                                "Poderá sempre iniciar sessão atravez desta opção caso esqueça permanentemente a sua senha..")
             janela_recuperarSenha.setWindowTitle('Recuperar Senha')
-            janela_recuperarSenha.setFixedSize(500, 250)
+            janela_recuperarSenha.setFixedSize(500, 500)
 
             layout = QFormLayout()
 
             image = QLabel()
-            image.setPixmap(QPixmap('img/Deus.jpg'))
+            image.setPixmap(QPixmap('img/01.jpg'))
             image.setAlignment(Qt.AlignCenter)
             layout.addRow(image)
 
@@ -484,7 +481,7 @@ RESPOSTA: {resposta.text()}"""
             layout.setSpacing(15)
 
             image = QLabel('<h3><i>"Mesmo que nada esteje bem, certifica te que tudo corra bem..\nDEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!"</i></h3>')
-            image.setPixmap(QPixmap(f'{os.path.abspath(os.curdir)}/img/004.png'))
+            image.setPixmap(QPixmap('img/02.jpg'))
             image.setAlignment(Qt.AlignCenter)
             image.setToolTip('Mesmo que nada esteje bem, certifica te que tudo corra bem..\nDEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!')
             layout.addRow(image)
@@ -672,14 +669,10 @@ RESPOSTA: {resposta.text()}"""
     class EN:
         def __init__(self):
             self.ferramentas = QWidget()
-            self.ferramentas.setFixedSize(600, 400)
+            self.ferramentas.setFixedSize(600, 600)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
-            self.ferramentas.setStyleSheet("QWidget QFrame {background-color: black; color: wheat; font-family: cambria; font-size: 10pt;}"
-                                           "QMenu::item:selected {background:rgb(115, 115, 115);}"
-                                           "QTextEdit{background-color: orange; color: black;}"
-                                           "QLineEdit{background-color: orange; color: black;}"
-                                           "QLabel a {color: white;}")
+            self.ferramentas.setStyleSheet(appTheme)
 
             menu = QMenuBar(self.ferramentas)
             detalhes = menu.addMenu('&Help')
@@ -695,7 +688,7 @@ RESPOSTA: {resposta.text()}"""
             sair.triggered.connect(sair_)
 
             self.tab = QTabWidget(self.ferramentas)
-            self.tab.setGeometry(0, 25, 600, 380)
+            self.tab.setGeometry(0, 25, 600, 580)
 
             self.moldura_main = None
             self.moldura_editar = None
@@ -710,7 +703,7 @@ RESPOSTA: {resposta.text()}"""
         def hello(self):
             QMessageBox.information(self.ferramentas, "About", """
 Name: GCrypter
-Version: 0.7.042021
+Version: 0.8.072021
 Designer & Programmer: Nurul GC
 Company: ArtesGC, Inc.
 """)
@@ -743,7 +736,7 @@ Enjoy!
             layout.setSpacing(15)
 
             image = QLabel()
-            image.setPixmap(QPixmap("img/alhamdulillah2.jpg"))
+            image.setPixmap(QPixmap("img/03.png"))
             image.setAlignment(Qt.AlignCenter)
             layout.addRow(image)
 
@@ -759,17 +752,17 @@ Enjoy!
                             question = QMessageBox.question(self.ferramentas, 'Login Failed',
                                                             f"Am sorry {self.utilizador_is.text()} You don't have an account yet..\n"
                                                             f"Register to Access the Service!")
-                            if question == 16384:
+                            if question == QMessageBox.Yes:
                                 self.cadastro()
-                            elif question == 65536:
+                            elif question == QMessageBox.No:
                                 return exit(0)
                 except FileNotFoundError:
                     question = QMessageBox.question(self.ferramentas, 'Login Failed',
                                                     f"Am sorry {self.utilizador_is.text()} You don't have an account yet..\n"
                                                     f"Register to Access the Service!")
-                    if question == 16384:
+                    if question == QMessageBox.Yes:
                         self.cadastro()
-                    elif question == 65536:
+                    elif question == QMessageBox.No:
                         return exit(0)
 
             self.utilizador_is = QLineEdit()
@@ -785,7 +778,7 @@ Enjoy!
             codigo.returnPressed.connect(iniciar)
             layout.addRow(codigo)
 
-            recuperarSenha = QLabel('<a href="#" style="text-decoration:none;">Forgot your password?</a>')
+            recuperarSenha = QLabel('<a href="#" style="text-decoration:none; color: white;">Forgot your password?</a>')
             recuperarSenha.setToolTip("Allows you to recover your login through your special answer provided in the registration\nIf you have not yet registered, do so now!")
             recuperarSenha.linkActivated.connect(self.recuperarSenha)
             recuperarSenha.setAlignment(Qt.AlignRight)
@@ -804,12 +797,11 @@ Enjoy!
 
         def cadastro(self):
             janelaCadastro = QDialog(self.ferramentas)
-            janelaCadastro.setPalette(QPalette(QColor('wheat')))
             janelaCadastro.setWhatsThis('Registration: allows the user to personalize an account with a name and password!')
             janelaCadastro.setWindowTitle('Register')
-            janelaCadastro.setFixedSize(500, 250)
+            janelaCadastro.setFixedSize(QSize(500, 500))
             layout = QFormLayout()
-            layout.setSpacing(5)
+            layout.setSpacing(10)
 
             def guardar():
                 if self.utilizador_cd.text() == '' and codigo.text() == '':
@@ -832,12 +824,12 @@ ANSWER: {resposta.text()}"""
                             doc1, doc2 = encrypt(texto)
                             file_user.write(str(doc1) + '\n' + str(doc2))
                         janelaCadastro.destroy()
-                        QMessageBox.information(self.ferramentas, 'Cadastro',
+                        QMessageBox.information(self.ferramentas, 'Register',
                                                 f"Congratulation {self.utilizador_cd.text()} your registration was successful\n"
                                                 f"now log in to enjoy the program..")
 
             image = QLabel()
-            image.setPixmap(QPixmap("img/Deus.jpg"))
+            image.setPixmap(QPixmap("img/01.jpg"))
             image.setAlignment(Qt.AlignCenter)
             layout.addRow(image)
 
@@ -875,16 +867,15 @@ ANSWER: {resposta.text()}"""
 
         def recuperarSenha(self):
             janela_recuperarSenha = QDialog(self.ferramentas)
-            janela_recuperarSenha.setPalette(QPalette(QColor('wheat')))
             janela_recuperarSenha.setWhatsThis("About: User session recovery!\n"
                                                "You can always log in using this option if you permanently forget your password..")
             janela_recuperarSenha.setWindowTitle('Recover Password')
-            janela_recuperarSenha.setFixedSize(500, 250)
+            janela_recuperarSenha.setFixedSize(500, 500)
 
             layout = QFormLayout()
 
             image = QLabel()
-            image.setPixmap(QPixmap('img/Deus.jpg'))
+            image.setPixmap(QPixmap('img/01.jpg'))
             image.setAlignment(Qt.AlignCenter)
             layout.addRow(image)
 
@@ -947,7 +938,6 @@ ANSWER: {resposta.text()}"""
 
         def main_c9r(self):
             self.moldura_main = QFrame()
-            self.moldura_main.setPalette(QPalette(QColor('wheat')))
             self.tab.addTab(self.moldura_main, 'Welcome')
             self.tab.setCurrentWidget(self.moldura_main)
 
@@ -955,14 +945,13 @@ ANSWER: {resposta.text()}"""
             layout.setSpacing(15)
 
             image = QLabel()
-            image.setPixmap(QPixmap('img/004.png'))
+            image.setPixmap(QPixmap('img/02.jpg'))
             image.setAlignment(Qt.AlignCenter)
             image.setToolTip("Even if nothing is right, make sure everything goes well..\n"
                              "GOD OFFERED YOU ANOTHER DAY ENJOY IT!")
             layout.addRow(image)
 
             rotulo = QLabel('<h2>Select the Operation to Perform</h2>')
-            rotulo.setFont(QFont('cambria'))
             rotulo.setAlignment(Qt.AlignCenter)
             layout.addRow(rotulo)
 
@@ -979,7 +968,7 @@ ANSWER: {resposta.text()}"""
             layout.addRow(editar_botao)
 
             browser = lambda p: webbrowser.open('https://artesgc.home.blog')
-            rotulo2 = QLabel("<a href='#' style='text-decoration:none;'>ArtesGC, Inc.</a>")
+            rotulo2 = QLabel("<a href='#' style='text-decoration:none; color: white;'>™ ArtesGC, Inc.</a>")
             rotulo2.setAlignment(Qt.AlignRight)
             rotulo2.setToolTip('Access to the official website of ArtesGC!')
             rotulo2.linkActivated.connect(browser)
@@ -1001,7 +990,6 @@ ANSWER: {resposta.text()}"""
 
         def codificar(self):
             self.moldura_cod = QFrame()
-            self.moldura_cod.setPalette(QPalette(QColor('wheat')))
             self.tab.addTab(self.moldura_cod, 'New File')
             self.tab.setCurrentWidget(self.moldura_cod)
 
@@ -1023,25 +1011,23 @@ ANSWER: {resposta.text()}"""
             layout.addWidget(texto)
 
             def guardar():
-                if titulo.text() == '':
+                if titulo.text() == '' or titulo.text().isspace():
                     QMessageBox.critical(self.ferramentas, 'Encode', f"Am sorry {self.utilizador_is.text()}, please name the document before saving it!")
                 else:
-                    try:
-                        with open(f'G6r-{self.utilizador_is.text()}/c8o-{titulo.text()}.gc', 'w+') as file_enc:
-                            doc1, doc2 = encrypt(texto.toPlainText())
-                            file_enc.write(str(doc1) + '\n' + str(doc2))
-                    except FileNotFoundError:
-                        os.mkdir(f'G6r-{self.utilizador_is.text()}')
-                        with open(f'G6r-{self.utilizador_is.text()}/c8o-{titulo.text()}.gc', 'w+') as file_enc:
-                            doc1, doc2 = encrypt(texto.toPlainText())
-                            file_enc.write(f"{doc1}\n{doc2}")
+                    if not os.path.exists(f'G6r-{self.utilizador_is.text()}/thoughts'):
+                        os.mkdir(f'G6r-{self.utilizador_is.text()}/thoughts')
 
-                    QMessageBox.information(self.ferramentas, 'Conclude', 'Successful Coding..\n 🤝 👌')
+                    with open(f'G6r-{self.utilizador_is.text()}/thoughts/{titulo.text()}.gc', 'w+') as file_enc:
+                        doc1, doc2 = encrypt(texto.toPlainText())
+                        file_enc.write(f"{doc1}\n{doc2}")
+
+                    QMessageBox.information(self.ferramentas, 'Conclude', 'Successful Coding..')
                     self.tab.removeTab(self.tab.currentIndex())
                     self.main0()
 
             hl = QHBoxLayout()
-            guardar_botao = QPushButton('Save (Encoded)')
+            guardar_botao = QPushButton('Save')
+            guardar_botao.setToolTip('Encoded')
             guardar_botao.clicked.connect(guardar)
             guardar_botao.setDefault(True)
             hl.addWidget(guardar_botao)
@@ -1067,7 +1053,7 @@ ANSWER: {resposta.text()}"""
                 return self.decodificar()
 
         def decodificar(self):
-            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador_is.text()}', filter='Files (*.gc)', caption='Select the file')
+            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador_is.text()}/thoughts', filter='Files (*.gc)', caption='Select the file')
             try:
                 with open(nome_file_open[0], 'r+') as file_decod:
                     file_ = file_decod.readlines()
@@ -1100,7 +1086,7 @@ ANSWER: {resposta.text()}"""
 
         def editar(self):
             self.utilizador = (self.utilizador_is.text() or self.utilizador_cd.text())
-            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador}', filter='Files (*.gc)', caption='Select the file')
+            nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'G6r-{self.utilizador}/thoughts', filter='Files (*.gc)', caption='Select the file')
             try:
                 with open(nome_file_open[0], 'r+') as file_decod:
                     file_ = file_decod.readlines()
@@ -1126,7 +1112,8 @@ ANSWER: {resposta.text()}"""
                     self.tab.removeTab(self.tab.currentIndex())
                     self.main0()
 
-                guardar_botao = QPushButton('Save (Rencoded)')
+                guardar_botao = QPushButton('Save')
+                guardar_botao.setToolTip('Rencoded')
                 guardar_botao.clicked.connect(guardar)
                 layout.addWidget(guardar_botao)
 
