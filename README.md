@@ -41,7 +41,7 @@ Enjoy!**_
 
 | Portugues | English |
 | --- | --- |
-| :checkmark: | :checkmark: |
+| :check: | :check: |
 
 ---
 
