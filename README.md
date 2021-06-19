@@ -1,6 +1,8 @@
-# Hello Welcome to the (GCrypter)
+<div align="center">
 
 ![gcrypter-icon](img/gcrypter.png)
+
+# Hello Welcome to the (GCrypter)
 
 ```txt
 It is a useful and practical tool for those
@@ -17,6 +19,8 @@ data and notes, keeping them afterwards ENCODED ..
 
 _**Thank you very much for your support! \
 Enjoy!**_
+
+</div>
 
 ---
 # Demos
