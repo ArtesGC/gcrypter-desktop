@@ -14,3 +14,6 @@
     - some bugs fixed and improved the layout!
 - [v0.7](https://github.com/ArtesGC/GCrypter/releases/tag/v0.7)
     - improved the layout, fixed some bugs, added the English support!
+- [v0.8](https://github.com/ArtesGC/GCrypter/releases/tag/v0.8)
+    - update the layout and images, fixed some silly bugs!
+    - update open-source LICENSE from BSL to BSD!
