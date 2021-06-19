@@ -23,34 +23,27 @@ Enjoy!**_
 </div>
 
 ---
+
 # Demos
 
-## English
-
 ![intro](img/demo/intro.png)
-![fail-intro](img/demo/erro1.png)
 ![in-en](img/demo/in-en.png)
-![hemo-session-en](img/demo/homesession-en.png)
-![recover-pass-en](img/demo/recoverpass-en.png)
-![register-en](img/demo/register-en.png)
-![welcome-en](img/demo/welcomepage-en.png)
-![encode-en](img/demo/encode-en.png)
-![about-en](img/demo/about-en.png)
-![instr-en](img/demo/instr-en.png)
+![hemo-session-en](img/demo/login.png)
+![recover-pass-en](img/demo/recover.png)
+![register-en](img/demo/register.png)
+![welcome-info](img/demo/welcome-info.png)
+![welcome-en](img/demo/welcomepage.png)
+![encode-en](img/demo/encodepage.png)
+![about-en](img/demo/about.png)
+![instructions-en](img/demo/instructions.png)
 
-## Portugues
+**WITH SUPPORT FOR TWO LANGUAGES:**
 
-![intro](img/demo/intro.png)
-![fail-intro](img/demo/erro1.png)
-![in-pt](img/demo/in-pt.png)
-![hemo-session-pt](img/demo/homesession-pt.png)
-![recover-pass-pt](img/demo/recoverpass-pt.png)
-![register-pt](img/demo/register-pt.png)
-![welcome-pt](img/demo/welcomepage-pt.png)
-![encode-pt](img/demo/encode-pt.png)
-![about-pt](img/demo/about-pt.png)
-![instr-pt](img/demo/instr-pt.png)
+| Portugues | English |
+| --- | --- |
+| :checkmark: | :checkmark: |
 
 ---
+
 &copy; 2019-2021 [Nurul Carvalho](mailto:nuruldecarvalho@gmail.com) \
 &trade; [ArtesGC](https://artesgc.home.blog)
