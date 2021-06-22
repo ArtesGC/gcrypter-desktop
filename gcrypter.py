@@ -231,6 +231,7 @@ class G6R:
             self.moldura_editar = None
             self.moldura_cod = None
             self.moldura_decod = None
+            self.moldura_visual = None
             self.utilizador = None
             self.utilizador_is = None
             self.utilizador_cd = None
@@ -480,7 +481,11 @@ RESPOSTA: {resposta.text()}"""
             layout = QFormLayout()
             layout.setSpacing(15)
 
-            image = QLabel('<h3><i>"Mesmo que nada esteje bem, certifica te que tudo corra bem..\nDEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!"</i></h3>')
+            intro = QLabel('<h3><i>"Mesmo que nada esteje bem, certifica te que tudo corra bem..<br>DEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!"</i></h3>')
+            intro.setAlignment(Qt.AlignCenter)
+            layout.addRow(intro)
+
+            image = QLabel()
             image.setPixmap(QPixmap('img/02.jpg'))
             image.setAlignment(Qt.AlignCenter)
             image.setToolTip('Mesmo que nada esteje bem, certifica te que tudo corra bem..\nDEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!')
@@ -490,6 +495,10 @@ RESPOSTA: {resposta.text()}"""
             rotulo.setFont(QFont('cambria'))
             rotulo.setAlignment(Qt.AlignCenter)
             layout.addRow(rotulo)
+
+            vis_botao = QPushButton('Pre-visualizar Criptografia')
+            vis_botao.clicked.connect(self.visualizar3)
+            layout.addRow(vis_botao)
 
             cod_botao = QPushButton('Codificar')
             cod_botao.clicked.connect(self.codificar1)
@@ -665,6 +674,69 @@ RESPOSTA: {resposta.text()}"""
                 self.moldura_editar.setLayout(layout)
             except FileNotFoundError:
                 QMessageBox.warning(self.ferramentas, 'Aviso', 'Ficheiro Não Encontrado ou Processo Cancelado!')
+
+        def visualizar3(self):
+            if self.moldura_visual is None:
+                return self.visualizar()
+            try:
+                self.tab.setCurrentWidget(self.moldura_visual)
+            except Exception:
+                self.tab.removeTab(self.tab.currentIndex())
+                return self.visualizar()
+            else:
+                self.tab.removeTab(self.tab.currentIndex())
+                return self.visualizar()
+
+        def visualizar(self):
+            self.moldura_visual = QWidget()
+            self.tab.addTab(self.moldura_visual, 'Visualizando criptografia')
+            self.tab.setCurrentWidget(self.moldura_visual)
+            layout = QFormLayout()
+            layoutText = QHBoxLayout()
+
+            def textEdited():
+                if ptext.toPlainText().isalpha():
+                    a, b = encrypt(ptext.toPlainText())
+                    rtext.setText(f"{a}\n{b}")
+                else:
+                    try:
+                        ab = ptext.toPlainText().split('\n')
+                        if len(ab) > 1:
+                            rtext.setText(f"{decrypt(ab[0], ab[1])}")
+                        else:
+                            rtext.clear()
+                    except Exception:
+                        QMessageBox.critical(self.ferramentas, 'Erro de codificacao', 'Verifique se os valores inseridos estao corretos..')
+                        rtext.clear()
+
+            ptext = QTextEdit()
+            ptext.setPlaceholderText(f"Digite alguma coisa {self.utilizador_is.text()}..")
+            ptext.textChanged.connect(textEdited)
+            layoutText.addWidget(ptext)
+
+            rtext = QTextEdit()
+            rtext.setPlaceholderText("E o resultado sera transcrito aqui..")
+            rtext.setReadOnly(True)
+            layoutText.addWidget(rtext)
+            layout.addRow(layoutText)
+
+            infoLabel = QLabel("""
+<small>
+<ul>
+<li>...</li>
+<li>...</li>
+<li>...</li>
+</ul>
+</small>""")
+            layout.addRow(infoLabel)
+
+            fechar = lambda: self.tab.removeTab(self.tab.currentIndex())
+            fecharBtn = QPushButton('Fechar')
+            fecharBtn.setDefault(True)
+            fecharBtn.clicked.connect(fechar)
+            layout.addRow(fecharBtn)
+
+            self.moldura_visual.setLayout(layout)
 
     class EN:
         def __init__(self):
