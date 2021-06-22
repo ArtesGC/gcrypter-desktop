@@ -77,7 +77,7 @@ QPushButton{
     border-width: 1px;
     border-radius: 5px;
     color: #d3dae3;
-    padding: 2px;
+    padding: 5px;
     background-color: #100E19;
 }
 
@@ -87,7 +87,7 @@ QPushButton::default{
     border-width: 1px;
     border-radius: 5px;
     color: #FFFFFF;
-    padding: 2px;
+    padding: 5px;
     background-color: #151a1e;
 }
 
@@ -100,7 +100,7 @@ QPushButton:hover{
     border-width: 2px;
     border-radius: 1px;
     color: #d3dae3;
-    padding: 2px;
+    padding: 5px;
 }
 
 QPushButton:pressed{
@@ -112,7 +112,7 @@ QPushButton:pressed{
     border-width: 2px;
     border-radius: 1px;
     color: #d3dae3;
-    padding: 2px;
+    padding: 5px;
 }
 
 QPushButton:disabled{
