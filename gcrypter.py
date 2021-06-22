@@ -156,6 +156,7 @@ Enjoy!
 
 class G6R:
     def __init__(self):
+        self.gc = QApplication(argv)
         self.janela = QWidget()
         self.janela.setWindowTitle("GCrypter")
         self.janela.setWindowIcon(QIcon("img/gcrypter-icon.png"))
@@ -187,7 +188,7 @@ class G6R:
         if self.idiomas.currentText() == 'English':
             while n < 101:
                 self.barraIniciar.setValue(n)
-                sleep(0.5)
+                sleep(0.2)
                 n += 5
             self.janela.destroy()
             app = G6R.EN()
@@ -195,8 +196,8 @@ class G6R:
         elif self.idiomas.currentText() == 'Português':
             while n < 101:
                 self.barraIniciar.setValue(n)
-                sleep(0.3)
-                n += 2
+                sleep(0.2)
+                n += 5
             self.janela.destroy()
             app = G6R.PT()
             app.ferramentas.show()
@@ -206,7 +207,7 @@ class G6R:
     class PT:
         def __init__(self):
             self.ferramentas = QWidget()
-            self.ferramentas.setFixedSize(600, 600)
+            self.ferramentas.setFixedSize(700, 650)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
             self.ferramentas.setStyleSheet(appTheme)
@@ -225,7 +226,7 @@ class G6R:
             sair.triggered.connect(sair_)
 
             self.tab = QTabWidget(self.ferramentas)
-            self.tab.setGeometry(0, 25, 600, 580)
+            self.tab.setGeometry(0, 25, 700, 630)
 
             self.moldura_main = None
             self.moldura_editar = None
@@ -481,14 +482,16 @@ RESPOSTA: {resposta.text()}"""
             layout = QFormLayout()
             layout.setSpacing(15)
 
-            intro = QLabel('<h3><i>"Mesmo que nada esteje bem, certifica te que tudo corra bem..<br>DEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!"</i></h3>')
+            intro = QLabel('<h3><i>"Mesmo que nada esteje bem, certifica te que tudo corra bem..<br>'
+                           'DEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!"</i></h3>')
             intro.setAlignment(Qt.AlignCenter)
             layout.addRow(intro)
 
             image = QLabel()
             image.setPixmap(QPixmap('img/02.jpg'))
             image.setAlignment(Qt.AlignCenter)
-            image.setToolTip('Mesmo que nada esteje bem, certifica te que tudo corra bem..\nDEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!')
+            image.setToolTip('Mesmo que nada esteje bem, certifica te que tudo corra bem..\n'
+                             'DEUS TE OFERECEU MAIS UM DIA APROVEITE AO MAXIMO!')
             layout.addRow(image)
 
             rotulo = QLabel('<h2>Selecione a Operação a Executar</h2>')
@@ -496,7 +499,7 @@ RESPOSTA: {resposta.text()}"""
             rotulo.setAlignment(Qt.AlignCenter)
             layout.addRow(rotulo)
 
-            vis_botao = QPushButton('Pre-visualizar Criptografia')
+            vis_botao = QPushButton('Pré-visualizar Criptografia')
             vis_botao.clicked.connect(self.visualizar3)
             layout.addRow(vis_botao)
 
@@ -689,7 +692,7 @@ RESPOSTA: {resposta.text()}"""
 
         def visualizar(self):
             self.moldura_visual = QWidget()
-            self.tab.addTab(self.moldura_visual, 'Visualizando criptografia')
+            self.tab.addTab(self.moldura_visual, 'Pré-visualizando criptografia')
             self.tab.setCurrentWidget(self.moldura_visual)
             layout = QFormLayout()
             layoutText = QHBoxLayout()
@@ -706,7 +709,7 @@ RESPOSTA: {resposta.text()}"""
                         else:
                             rtext.clear()
                     except Exception:
-                        QMessageBox.critical(self.ferramentas, 'Erro de codificacao', 'Verifique se os valores inseridos estao corretos..')
+                        QMessageBox.critical(self.ferramentas, 'Erro de codificação', 'Verifique se os valores inseridos estão corretos..')
                         rtext.clear()
 
             ptext = QTextEdit()
@@ -723,9 +726,9 @@ RESPOSTA: {resposta.text()}"""
             infoLabel = QLabel("""
 <small>
 <ul>
-<li>...</li>
-<li>...</li>
-<li>...</li>
+<li>Este recurso permite que você teste e entenda como o GCrypter funciona.</li>
+<li>Você também pode copiar e colar valores de uma caixa para outra.</li>
+<li>Sinta-se à vontade para tentar criptografar e descriptografar o que quiser.</li>
 </ul>
 </small>""")
             layout.addRow(infoLabel)
@@ -741,7 +744,7 @@ RESPOSTA: {resposta.text()}"""
     class EN:
         def __init__(self):
             self.ferramentas = QWidget()
-            self.ferramentas.setFixedSize(600, 600)
+            self.ferramentas.setFixedSize(700, 650)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
             self.ferramentas.setStyleSheet(appTheme)
@@ -760,12 +763,13 @@ RESPOSTA: {resposta.text()}"""
             sair.triggered.connect(sair_)
 
             self.tab = QTabWidget(self.ferramentas)
-            self.tab.setGeometry(0, 25, 600, 580)
+            self.tab.setGeometry(0, 25, 700, 630)
 
             self.moldura_main = None
             self.moldura_editar = None
             self.moldura_cod = None
             self.moldura_decod = None
+            self.moldura_visual = None
             self.utilizador = None
             self.utilizador_is = None
             self.utilizador_cd = None
@@ -805,7 +809,7 @@ Enjoy!
             janelaInicio = QWidget()
             self.tab.addTab(janelaInicio, 'Home Session')
             layout = QFormLayout()
-            layout.setSpacing(15)
+            layout.setSpacing(25)
 
             image = QLabel()
             image.setPixmap(QPixmap("img/03.png"))
@@ -1016,6 +1020,11 @@ ANSWER: {resposta.text()}"""
             layout = QFormLayout()
             layout.setSpacing(15)
 
+            intro = QLabel('<h3><i>"Even if nothing is right, make sure everything goes well..<br>'
+                           'GOD OFFERED YOU ANOTHER DAY ENJOY IT!"</i></h3>')
+            intro.setAlignment(Qt.AlignCenter)
+            layout.addRow(intro)
+
             image = QLabel()
             image.setPixmap(QPixmap('img/02.jpg'))
             image.setAlignment(Qt.AlignCenter)
@@ -1026,6 +1035,10 @@ ANSWER: {resposta.text()}"""
             rotulo = QLabel('<h2>Select the Operation to Perform</h2>')
             rotulo.setAlignment(Qt.AlignCenter)
             layout.addRow(rotulo)
+
+            vis_botao = QPushButton('Preview Encryption')
+            vis_botao.clicked.connect(self.visualizar3)
+            layout.addRow(vis_botao)
 
             cod_botao = QPushButton('Encode')
             cod_botao.clicked.connect(self.codificar1)
@@ -1054,10 +1067,10 @@ ANSWER: {resposta.text()}"""
             try:
                 self.tab.setCurrentWidget(self.moldura_cod)
             except Exception as e:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.codificar()
             else:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.codificar()
 
         def codificar(self):
@@ -1118,7 +1131,7 @@ ANSWER: {resposta.text()}"""
             try:
                 self.tab.setCurrentWidget(self.moldura_decod)
             except Exception as e:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.decodificar()
             else:
                 self.tab.removeTab(1)
@@ -1202,13 +1215,75 @@ ANSWER: {resposta.text()}"""
             except FileNotFoundError:
                 QMessageBox.warning(self.ferramentas, 'Warning', 'File Not Found or Process Canceled!')
 
+        def visualizar3(self):
+            if self.moldura_visual is None:
+                return self.visualizar()
+            try:
+                self.tab.setCurrentWidget(self.moldura_visual)
+            except Exception:
+                self.tab.removeTab(1)
+                return self.visualizar()
+            else:
+                self.tab.removeTab(1)
+                return self.visualizar()
+
+        def visualizar(self):
+            self.moldura_visual = QWidget()
+            self.tab.addTab(self.moldura_visual, 'Pre-viewing Encryption')
+            self.tab.setCurrentWidget(self.moldura_visual)
+            layout = QFormLayout()
+            layoutText = QHBoxLayout()
+
+            def textEdited():
+                if ptext.toPlainText().isalpha():
+                    a, b = encrypt(ptext.toPlainText())
+                    rtext.setText(f"{a}\n{b}")
+                else:
+                    try:
+                        ab = ptext.toPlainText().split('\n')
+                        if len(ab) > 1:
+                            rtext.setText(f"{decrypt(ab[0], ab[1])}")
+                        else:
+                            rtext.clear()
+                    except Exception:
+                        QMessageBox.critical(self.ferramentas, 'Coding Error', 'Check if the values entered are correct..')
+                        rtext.clear()
+
+            ptext = QTextEdit()
+            ptext.setPlaceholderText(f"Type something {self.utilizador_is.text()}..")
+            ptext.textChanged.connect(textEdited)
+            layoutText.addWidget(ptext)
+
+            rtext = QTextEdit()
+            rtext.setPlaceholderText("And the result will be transcribed here..")
+            rtext.setReadOnly(True)
+            layoutText.addWidget(rtext)
+            layout.addRow(layoutText)
+
+            infoLabel = QLabel("""
+<small>
+<ul>
+<li>This feature allows you to test and understand how GCrypter works.</li>
+<li>You are also allowed to copy and paste values from one box to another.</li>
+<li>Please feel free to try encrypting and decrypting anything you want to.</li>
+</ul>
+</small>""")
+            layout.addRow(infoLabel)
+
+            fechar = lambda: self.tab.removeTab(self.tab.currentIndex())
+            fecharBtn = QPushButton('Close')
+            fecharBtn.setDefault(True)
+            fecharBtn.clicked.connect(fechar)
+            layout.addRow(fecharBtn)
+
+            self.moldura_visual.setLayout(layout)
+
 
 if __name__ == '__main__':
     if len(argv) == 1:
-        gc = QApplication(argv)
         gcApp = G6R()
         gcApp.janela.show()
-        gc.exec_()
+        gcApp.gc.exec_()
     elif len(argv) >= 2:
         gcApp = EditarFicheiroExterno()
         gcApp.ferramentas.show()
