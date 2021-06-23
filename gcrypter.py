@@ -271,7 +271,7 @@ Faça Bom Proveito!
             janelaInicio = QWidget()
             self.tab.addTab(janelaInicio, 'Inicio Sessão')
             layout = QFormLayout()
-            layout.setSpacing(15)
+            layout.setSpacing(25)
 
             image = QLabel()
             image.setPixmap(QPixmap("img/03.png"))
