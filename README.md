@@ -24,7 +24,7 @@ Enjoy!**_
 
 ---
 
-# Demos
+# _Demos_
 
 ![intro](img/demo/intro.png)
 ![in-en](img/demo/in-en.png)
@@ -37,7 +37,7 @@ Enjoy!**_
 ![about-en](img/demo/about.png)
 ![instructions-en](img/demo/instructions.png)
 
-**WITH SUPPORT FOR TWO LANGUAGES:**
+# _LANGUAGES' SUPPORT_
 
 | Portugues | English |
 | --- | --- |
