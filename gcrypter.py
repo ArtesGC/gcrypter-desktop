@@ -207,7 +207,7 @@ class G6R:
     class PT:
         def __init__(self):
             self.ferramentas = QWidget()
-            self.ferramentas.setFixedSize(700, 650)
+            self.ferramentas.setFixedSize(700, 600)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
             self.ferramentas.setStyleSheet(appTheme)
@@ -221,12 +221,12 @@ class G6R:
             instr.triggered.connect(self.instr)
             detalhes.addSeparator()
 
-            sair_ = lambda: exit(0)
             sair = detalhes.addAction('&Sair')
-            sair.triggered.connect(sair_)
+            sair.triggered.connect(self.sair)
 
             self.tab = QTabWidget(self.ferramentas)
-            self.tab.setGeometry(0, 25, 700, 630)
+            self.tab.setDocumentMode(True)
+            self.tab.setGeometry(0, 25, 700, 580)
 
             self.moldura_main = None
             self.moldura_editar = None
@@ -238,6 +238,14 @@ class G6R:
             self.utilizador_cd = None
 
             self.inicio_sessao()
+
+        def sair(self):
+            resp = QMessageBox.question(self.ferramentas, 'Terminar o Programa', 'Obrigado por usar o nosso programa.\n'
+                                                                                 'Por favor considere visitar a nossa pagina e conhecer outras opções e serviços! - ArtesGC')
+            if resp == QMessageBox.Yes:
+                webbrowser.open_new('https://artesgc.home.blog')
+            else:
+                exit(0)
 
         def hello(self):
             QMessageBox.information(self.ferramentas, "Sobre", """
@@ -271,7 +279,7 @@ Faça Bom Proveito!
             janelaInicio = QWidget()
             self.tab.addTab(janelaInicio, 'Inicio Sessão')
             layout = QFormLayout()
-            layout.setSpacing(25)
+            layout.setSpacing(15)
 
             image = QLabel()
             image.setPixmap(QPixmap("img/03.png"))
@@ -464,17 +472,17 @@ RESPOSTA: {resposta.text()}"""
 
         def main0(self):
             if self.moldura_main is None:
-                return self.main_c9r()
+                return self.main()
             try:
                 self.tab.setCurrentWidget(self.moldura_main)
             except Exception as e:
-                self.tab.removeTab(self.tab.currentIndex())
-                return self.main_c9r()
+                self.tab.removeTab(0)
+                return self.main()
             else:
-                self.tab.removeTab(self.tab.currentIndex())
-                return self.main_c9r()
+                self.tab.removeTab(0)
+                return self.main()
 
-        def main_c9r(self):
+        def main(self):
             self.moldura_main = QFrame()
             self.tab.addTab(self.moldura_main, 'Bem-Vindo')
             self.tab.setCurrentWidget(self.moldura_main)
@@ -530,13 +538,42 @@ RESPOSTA: {resposta.text()}"""
             try:
                 self.tab.setCurrentWidget(self.moldura_cod)
             except Exception as e:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.codificar()
             else:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.codificar()
 
         def codificar(self):
+            def pe():
+                if preview.isChecked():
+                    texto_enc.setHidden(False)
+                else:
+                    texto_enc.setHidden(True)
+
+            def guardar():
+                if titulo.text() == '':
+                    QMessageBox.critical(self.ferramentas, 'Codificar', f'Lamento {self.utilizador_is.text()}, '
+                                                                        f'por favor atribua um nome ao documento antes de guarda-lo!')
+                else:
+                    if not os.path.exists(f'G6r-{self.utilizador_is.text()}/pensamentos'):
+                        os.mkdir(f'G6r-{self.utilizador_is.text()}/pensamentos')
+
+                    with open(f'G6r-{self.utilizador_is.text()}/pensamentos/{titulo.text()}.gc', 'w+') as file_enc:
+                        doc1, doc2 = encrypt(texto.toPlainText())
+                        file_enc.write(f"{doc1}\n{doc2}")
+
+                    QMessageBox.information(self.ferramentas, 'Concluido', 'Codificação Bem Sucedida..')
+                    self.tab.removeTab(self.tab.currentIndex())
+                    self.main0()
+
+            def textEdited():
+                if texto.toPlainText().isalnum() or ' ' in texto.toPlainText():
+                    a, b = encrypt(texto.toPlainText())
+                    texto_enc.setText(f"{a}\n{b}")
+                else:
+                    texto_enc.clear()
+
             self.moldura_cod = QFrame()
             self.tab.addTab(self.moldura_cod, 'Novo Arquivo')
             self.tab.setCurrentWidget(self.moldura_cod)
@@ -548,33 +585,25 @@ RESPOSTA: {resposta.text()}"""
             titulo.setAlignment(Qt.AlignCenter)
             titulo.setToolTip('Obrigatório')
             titulo.setPlaceholderText('Digite um nome para o Arquivo..')
-            hl.addRow(titulo)
+            preview = QRadioButton('Previsualizar Encriptação')
+            preview.clicked.connect(pe)
+            hl.addRow(preview, titulo)
             layout.addLayout(hl)
 
             texto = QTextEdit()
             texto.setFont(QFont('cambria', 12))
             texto.setAcceptRichText(True)
             texto.setAcceptDrops(True)
+            texto.textChanged.connect(textEdited)
             texto.setPlaceholderText(f'Em que estas a pensar {self.utilizador_is.text()}..')
             layout.addWidget(texto)
 
-            def guardar():
-                if titulo.text() == '':
-                    QMessageBox.critical(self.ferramentas, 'Codificar', f'Lamento {self.utilizador_is.text()}, por favor atribua um nome ao documento antes de guarda-lo!')
-                else:
-                    try:
-                        with open(f'G6r-{self.utilizador_is.text()}/c8o-{titulo.text()}.gc', 'w+') as file_enc:
-                            doc1, doc2 = encrypt(texto.toPlainText())
-                            file_enc.write(str(doc1) + '\n' + str(doc2))
-                    except FileNotFoundError:
-                        os.mkdir(f'G6r-{self.utilizador_is.text()}')
-                        with open(f'G6r-{self.utilizador_is.text()}/c8o-{titulo.text()}.gc', 'w+') as file_enc:
-                            doc1, doc2 = encrypt(texto.toPlainText())
-                            file_enc.write(f"{doc1}\n{doc2}")
-
-                    QMessageBox.information(self.ferramentas, 'Concluido', 'Codificação Bem Sucedida..\n 🤝 👌')
-                    self.tab.removeTab(self.tab.currentIndex())
-                    self.main0()
+            texto_enc = QTextEdit()
+            texto_enc.setReadOnly(True)
+            texto_enc.setHidden(True)
+            texto_enc.setAcceptDrops(True)
+            texto_enc.setPlaceholderText(f'O seu texto encriptado será apresentado aqui..')
+            layout.addWidget(texto_enc)
 
             hl = QHBoxLayout()
             guardar_botao = QPushButton('Guardar')
@@ -588,6 +617,7 @@ RESPOSTA: {resposta.text()}"""
             cancelar_botao.clicked.connect(cancelar)
             cancelar_botao.setDefault(True)
             hl.addWidget(cancelar_botao)
+
             layout.addLayout(hl)
             self.moldura_cod.setLayout(layout)
 
@@ -597,10 +627,10 @@ RESPOSTA: {resposta.text()}"""
             try:
                 self.tab.setCurrentWidget(self.moldura_decod)
             except Exception as e:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.decodificar()
             else:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.decodificar()
 
         def decodificar(self):
@@ -684,10 +714,10 @@ RESPOSTA: {resposta.text()}"""
             try:
                 self.tab.setCurrentWidget(self.moldura_visual)
             except Exception:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.visualizar()
             else:
-                self.tab.removeTab(self.tab.currentIndex())
+                self.tab.removeTab(1)
                 return self.visualizar()
 
         def visualizar(self):
@@ -698,7 +728,7 @@ RESPOSTA: {resposta.text()}"""
             layoutText = QHBoxLayout()
 
             def textEdited():
-                if ptext.toPlainText().isalpha():
+                if ptext.toPlainText().isalnum():
                     a, b = encrypt(ptext.toPlainText())
                     rtext.setText(f"{a}\n{b}")
                 else:
@@ -744,7 +774,7 @@ RESPOSTA: {resposta.text()}"""
     class EN:
         def __init__(self):
             self.ferramentas = QWidget()
-            self.ferramentas.setFixedSize(700, 650)
+            self.ferramentas.setFixedSize(700, 600)
             self.ferramentas.setWindowTitle('GCrypter')
             self.ferramentas.setWindowIcon(QIcon('img/gcrypter-icon.png'))
             self.ferramentas.setStyleSheet(appTheme)
@@ -758,12 +788,12 @@ RESPOSTA: {resposta.text()}"""
             instr.triggered.connect(self.instr)
             detalhes.addSeparator()
 
-            sair_ = lambda: exit(0)
             sair = detalhes.addAction('&Quit')
-            sair.triggered.connect(sair_)
+            sair.triggered.connect(self.sair)
 
             self.tab = QTabWidget(self.ferramentas)
-            self.tab.setGeometry(0, 25, 700, 630)
+            self.tab.setDocumentMode(True)
+            self.tab.setGeometry(0, 25, 700, 580)
 
             self.moldura_main = None
             self.moldura_editar = None
@@ -775,6 +805,14 @@ RESPOSTA: {resposta.text()}"""
             self.utilizador_cd = None
 
             self.inicio_sessao()
+
+        def sair(self):
+            resp = QMessageBox.question(self.ferramentas, 'Quit Program', 'Thank you for use our software.\n'
+                                                                          'Please consider visit our website and have a look to other options and services! - ArtesGC')
+            if resp == QMessageBox.Yes:
+                webbrowser.open('https://artesgc.home.blog')
+            else:
+                exit(0)
 
         def hello(self):
             QMessageBox.information(self.ferramentas, "About", """
@@ -809,7 +847,7 @@ Enjoy!
             janelaInicio = QWidget()
             self.tab.addTab(janelaInicio, 'Home Session')
             layout = QFormLayout()
-            layout.setSpacing(25)
+            layout.setSpacing(10)
 
             image = QLabel()
             image.setPixmap(QPixmap("img/03.png"))
@@ -1002,17 +1040,17 @@ ANSWER: {resposta.text()}"""
 
         def main0(self):
             if self.moldura_main is None:
-                return self.main_c9r()
+                return self.main()
             try:
                 self.tab.setCurrentWidget(self.moldura_main)
             except Exception as e:
-                self.tab.removeTab(self.tab.currentIndex())
-                return self.main_c9r()
+                self.tab.removeTab(1)
+                return self.main()
             else:
-                self.tab.removeTab(self.tab.currentIndex())
-                return self.main_c9r()
+                self.tab.removeTab(1)
+                return self.main()
 
-        def main_c9r(self):
+        def main(self):
             self.moldura_main = QFrame()
             self.tab.addTab(self.moldura_main, 'Welcome')
             self.tab.setCurrentWidget(self.moldura_main)
@@ -1074,30 +1112,16 @@ ANSWER: {resposta.text()}"""
                 return self.codificar()
 
         def codificar(self):
-            self.moldura_cod = QFrame()
-            self.tab.addTab(self.moldura_cod, 'New File')
-            self.tab.setCurrentWidget(self.moldura_cod)
-
-            layout = QVBoxLayout()
-
-            hl = QFormLayout()
-            titulo = QLineEdit()
-            titulo.setAlignment(Qt.AlignCenter)
-            titulo.setToolTip('Required')
-            titulo.setPlaceholderText('Enter a name for the File..')
-            hl.addRow(titulo)
-            layout.addLayout(hl)
-
-            texto = QTextEdit()
-            texto.setFont(QFont('cambria', 12))
-            texto.setAcceptRichText(True)
-            texto.setAcceptDrops(True)
-            texto.setPlaceholderText(f'What are you thinking {self.utilizador_is.text()}..')
-            layout.addWidget(texto)
+            def pe():
+                if preview.isChecked():
+                    texto_enc.setHidden(False)
+                else:
+                    texto_enc.setHidden(True)
 
             def guardar():
                 if titulo.text() == '' or titulo.text().isspace():
-                    QMessageBox.critical(self.ferramentas, 'Encode', f"Am sorry {self.utilizador_is.text()}, please name the document before saving it!")
+                    QMessageBox.critical(self.ferramentas, 'Encode', f"Am sorry {self.utilizador_is.text()}, "
+                                                                     f"please name the document before saving it!")
                 else:
                     if not os.path.exists(f'G6r-{self.utilizador_is.text()}/thoughts'):
                         os.mkdir(f'G6r-{self.utilizador_is.text()}/thoughts')
@@ -1109,6 +1133,44 @@ ANSWER: {resposta.text()}"""
                     QMessageBox.information(self.ferramentas, 'Conclude', 'Successful Coding..')
                     self.tab.removeTab(self.tab.currentIndex())
                     self.main0()
+
+            def textEdited():
+                if texto.toPlainText().isalnum() or ' ' in texto.toPlainText():
+                    a, b = encrypt(texto.toPlainText())
+                    texto_enc.setText(f"{a}\n{b}")
+                else:
+                    texto_enc.clear()
+
+            self.moldura_cod = QFrame()
+            self.tab.addTab(self.moldura_cod, 'New File')
+            self.tab.setCurrentWidget(self.moldura_cod)
+
+            layout = QVBoxLayout()
+
+            hl = QFormLayout()
+            titulo = QLineEdit()
+            titulo.setAlignment(Qt.AlignCenter)
+            titulo.setToolTip('Required')
+            titulo.setPlaceholderText('Enter a name for the File..')
+            preview = QRadioButton('Preview Encryption')
+            preview.clicked.connect(pe)
+            hl.addRow(preview, titulo)
+            layout.addLayout(hl)
+
+            texto = QTextEdit()
+            texto.setFont(QFont('cambria', 12))
+            texto.setAcceptRichText(True)
+            texto.setAcceptDrops(True)
+            texto.textChanged.connect(textEdited)
+            texto.setPlaceholderText(f'What are you thinking {self.utilizador_is.text()}..')
+            layout.addWidget(texto)
+
+            texto_enc = QTextEdit()
+            texto_enc.setReadOnly(True)
+            texto_enc.setHidden(True)
+            texto_enc.setAcceptDrops(True)
+            texto_enc.setPlaceholderText(f'Your encoded text will be displayed here..')
+            layout.addWidget(texto_enc)
 
             hl = QHBoxLayout()
             guardar_botao = QPushButton('Save')
@@ -1122,6 +1184,7 @@ ANSWER: {resposta.text()}"""
             cancelar_botao.clicked.connect(cancelar)
             cancelar_botao.setDefault(True)
             hl.addWidget(cancelar_botao)
+
             layout.addLayout(hl)
             self.moldura_cod.setLayout(layout)
 
@@ -1235,7 +1298,7 @@ ANSWER: {resposta.text()}"""
             layoutText = QHBoxLayout()
 
             def textEdited():
-                if ptext.toPlainText().isalpha():
+                if ptext.toPlainText().isalnum():
                     a, b = encrypt(ptext.toPlainText())
                     rtext.setText(f"{a}\n{b}")
                 else:
