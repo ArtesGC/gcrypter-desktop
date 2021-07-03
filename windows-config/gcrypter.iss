@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GCrypter"
-#define MyAppVersion "0.7.42021"
+#define MyAppVersion "0.8"
 #define MyAppPublisher "ArtesGC, Inc."
 #define MyAppURL "https://artesgc.home.blog"
 #define MyAppExeName "GCrypter.exe"
@@ -13,7 +13,7 @@
 AppId={{DE9A12BC-A795-4A3A-A46F-0CC55050E8AD}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-AppVerName={#MyAppName} {#MyAppVersion}
+AppVerName={#MyAppName}-{#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -33,31 +33,31 @@ UsedUserAreasWarning=no
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=D:\Projectos\GCrypter\dist
-OutputBaseFilename=gcrypter_0.7-042021
-SetupIconFile="D:\Projectos\GCrypter\img\gcrypter-256x256.ico"
+OutputDir="C:\Users\nurul\Documents\Projectos\GCrypter\dist"
+OutputBaseFilename={#MyAppName}_{#MyAppVersion}-072021
+SetupIconFile="C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter-256x256.ico"
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "D:\Projectos\ArtesGC\GC-LicensasOS\license_BSL(en).txt";
-Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "D:\Projectos\ArtesGC\GC-LicensasOS\license_BSL(pt).txt";
+Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "C:\Users\nurul\Documents\Projectos\GCrypter\LICENSE";
+Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "C:\Users\nurul\Documents\Projectos\GCrypter\LICENSE";
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
 
 [Files]
-Source: "D:\Projectos\GCrypter\dist\GCrypter.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Projectos\ArtesGC\GC-LicensasOS\license_BSL(pt).txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Projectos\ArtesGC\GC-LicensasOS\license_BSL(en).txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Projectos\GCrypter\img\004.png"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "D:\Projectos\GCrypter\img\alhamdulillah2.jpg"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "D:\Projectos\GCrypter\img\Deus.jpg"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "D:\Projectos\GCrypter\img\gcrypter.png"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "D:\Projectos\GCrypter\img\gcrypter-256x256.ico"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "D:\Projectos\GCrypter\img\gcrypter-icon.png"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\dist\GCrypter.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\01.jpg"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\02.jpg"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\03.png"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter.png"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter-256x256.ico"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter-icon.png"; DestDir: "{app}\img"; Flags: ignoreversion
+Source: "C:\Users\nurul\Documents\Projectos\GCrypter\themes\gc-manjaromix.qss"; DestDir: "{app}\themes"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
