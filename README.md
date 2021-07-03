@@ -1,7 +1,7 @@
 <div align="center">
 
-![gcrypter-icon](img/gcrypter.png)
-[![Download GCrypter](https://img.shields.io/sourceforge/dt/gcrypter.svg)](https://sourceforge.net/projects/gcrypter/files/latest/download)
+![gcrypter-icon](img/gcrypter.png) \
+[![Download GCrypter](https://img.shields.io/sourceforge/dt/gcrypter.svg)](https://sourceforge.net/projects/gcrypter/files/latest/download) \
 [![Download GCrypter](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/gcrypter/files/latest/download)
 
 # Hello Welcome to the (GCrypter)
