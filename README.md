@@ -3,7 +3,7 @@
   
 [![Download GCrypter](https://img.shields.io/sourceforge/dt/gcrypter.svg)](https://sourceforge.net/projects/gcrypter/files/latest/download) \
 [![Download GCrypter](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/gcrypter/files/latest/download) \
-![gcrypter-icon](img/gcrypter.png)
+![gcrypter-icon](gcrypter/icons/gcrypter-logo-dark.png)
 
 # Hello Welcome to the (GCrypter)
 
@@ -29,16 +29,16 @@ Enjoy!**_
 
 # _Demos_
 
-![intro](img/demo/intro.png)
-![in-en](img/demo/in-en.png)
-![hemo-session-en](img/demo/login.png)
-![recover-pass-en](img/demo/recover.png)
-![register-en](img/demo/register.png)
-![welcome-info](img/demo/welcome-info.png)
-![welcome-en](img/demo/welcomepage.png)
-![encode-en](img/demo/encodepage.png)
-![about-en](img/demo/about.png)
-![instructions-en](img/demo/instructions.png)
+![intro](docs/demos/intro.png)
+![in-en](docs/demos/in-en.png)
+![hemo-session-en](docs/demos/login.png)
+![recover-pass-en](docs/demos/recover.png)
+![register-en](docs/demos/register.png)
+![welcome-info](docs/demos/welcome-info.png)
+![welcome-en](docs/demos/welcomepage.png)
+![encode-en](docs/demos/encodepage.png)
+![about-en](docs/demos/about.png)
+![instructions-en](docs/demos/instructions.png)
 
 # _LANGUAGES' SUPPORT_
 
