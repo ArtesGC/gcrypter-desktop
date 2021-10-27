@@ -7,9 +7,10 @@
 #  Foco Fé Força Paciência                                                     *
 #  Allah no Comando.                                                           *
 # ******************************************************************************
-import os
+from os import path, name
 from configparser import ConfigParser
 from random import randint
+from secrets import token_bytes
 from subprocess import getoutput
 from sys import argv
 from time import sleep
@@ -22,14 +23,40 @@ from gcrypter.en import EN
 from gcrypter.pt import PT
 
 
+def encrypt(p: str):
+    """funcao encriptadora"""
+    encriptar = p.encode()
+    encriptar_ = token_bytes(len(p))
+
+    encriptado = int.from_bytes(encriptar, 'big')
+    encriptado_ = int.from_bytes(encriptar_, 'big')
+
+    encriptado_final = encriptado ^ encriptado_
+    return encriptado_final, encriptado_
+
+
+def decrypt(p: int, q: int):
+    """funcao desencriptadora"""
+    palavra_encriptada = int(p) ^ int(q)
+    desencriptada = palavra_encriptada.to_bytes((palavra_encriptada.bit_length() + 7) // 8, 'big')
+    return desencriptada.decode()
+
+
+def debugpath() -> str:
+    if name == 'posix':
+        home = getoutput('echo $HOME')
+        return path.join(home, '.gcr-debug')
+    return '.gcr-debug'
+
+
 class G6R:
     def __init__(self):
         self.gc = QApplication(argv)
 
         # application font
-        QFontDatabase.addApplicationFont("./fonts/Abel.ttf")
+        QFontDatabase.addApplicationFont("gcr-fonts/Abel.ttf")
 
-        img = QPixmap("icons/gcrypter-logo-02.png").scaled(QSize(500, 500))
+        img = QPixmap("gcr-icons/gcrypter-logo-02.png").scaled(QSize(500, 500))
         self.align = int(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignAbsolute)
         self.color = Qt.GlobalColor.darkGreen
 
@@ -37,13 +64,6 @@ class G6R:
         self.janela.setStyleSheet(theme)
         self.janela.show()
         self.iniciar()
-
-    @property
-    def debugpath(self) -> str:
-        if os.name == 'posix':
-            home = getoutput('echo $HOME')
-            return os.path.join(home, '.gcr-debug')
-        return '.gcr-debug'
 
     def iniciar(self):
         n = 0
@@ -53,8 +73,8 @@ class G6R:
             self.janela.showMessage(f"Loading ... {load}%", self.align, self.color)
             sleep(0.5)
             load += randint(1, 10)
-        if os.path.exists(f'{self.debugpath}/gcrypter.ini'):
-            inifile.read(f'{self.debugpath}/gcrypter.ini')
+        if path.exists(f'{debugpath()}/gcrypter.ini'):
+            inifile.read(f'{debugpath()}/gcrypter.ini')
             if inifile['MAIN']['lang'] == 'English':
                 app = EN()
                 app.ferramentas.show()
@@ -62,14 +82,14 @@ class G6R:
                 app = PT()
                 app.ferramentas.show()
             else:
-                QMessageBox.critical(QWidget, 'Error', "- Am sorry, the language set in your [imagc.ini] file is unsupported!\n"
-                                                       "- Lamento, o idioma definido no seu ficheiro [imagc.ini] não é suportado!")
+                QMessageBox.critical(QWidget, 'X_X', "- Am sorry, the language set in your [imagc.ini] file is unsupported!\n"
+                                                     "- Lamento, o idioma definido no seu ficheiro [imagc.ini] não é suportado!")
         else:
             app = EN()
             app.ferramentas.show()
 
 
 if __name__ == '__main__':
-    theme = open('themes/gcrypter.qss').read().strip()
+    theme = open('gcr-themes/gcrypter.qss').read().strip()
     gcApp = G6R()
     gcApp.gc.exec()
