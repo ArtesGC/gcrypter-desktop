@@ -1,26 +1,48 @@
 # ******************************************************************************
 #  (c) 2019-2021 Nurul-GC.                                                     *
 # ******************************************************************************
-import os
-import webbrowser
 from configparser import ConfigParser
-from subprocess import getoutput
+from datetime import datetime
+from os import path, makedirs, listdir
+from re import compile
+from webbrowser import open_new
 
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
-from gcrypter.gcrypt import encrypt, decrypt
+from gcrypter import debugpath, encrypt, decrypt
 
-theme = open('themes/gcrypter.qss').read().strip()
+theme = open('gcr-themes/gcrypter.qss').read().strip()
+
+
+def perfilnome(_folder: str) -> str or None:
+    nome = compile("G6r-[aA-zZ]+")
+    if nome.match(_folder):
+        return _folder.split("-")[-1]
+    return None
+
+
+def created(_username: str):
+    config = ConfigParser()
+    config['MAIN'] = {'created': datetime.today()}
+    with open(f"{debugpath()}/G6r-{_username}/a5t_d5s.ini", "w+") as inifile:
+        config.write(inifile)
+
+
+def logged(_username: str):
+    config = ConfigParser()
+    config['MAIN'] = {'last_login': datetime.today()}
+    with open(f"{debugpath()}/G6r-{_username}/a5t_d5s.ini", "w+") as inifile:
+        config.write(inifile)
 
 
 class PT:
     def __init__(self):
-        self.ferramentas = QWidget()
-        self.ferramentas.setFixedSize(600, 670)
+        self.ferramentas = QDialog()
+        self.ferramentas.setFixedSize(QSize(700, 650))
         self.ferramentas.setWindowTitle('GCrypter')
-        self.ferramentas.setWindowIcon(QIcon('icons/favicon-192x192.png'))
+        self.ferramentas.setWindowIcon(QIcon('gcr-icons/favicon-192x192.png'))
         self.ferramentas.setStyleSheet(theme)
 
         # layout
@@ -51,7 +73,7 @@ class PT:
         layout.addWidget(self.tab)
 
         # copyright-label
-        browser = lambda p: webbrowser.open_new('https://artesgc.home.blog')
+        browser = lambda p: open_new('https://artesgc.home.blog')
         website = QLabel("<a href='#' style='text-decoration:none; color:white;'>™ ArtesGC, Inc.</a>")
         website.setAlignment(Qt.AlignmentFlag.AlignRight)
         website.setToolTip('Acesse o website oficial da ArtesGC!')
@@ -67,14 +89,45 @@ class PT:
         self.moldura_decodificar = None
 
         self.ferramentas.setLayout(layout)
-        self.inicio_sessao()
+        if len(listdir(debugpath())) > 1:
+            self.usuarios_cadastrados()
+        else:
+            self.inicio_sessao()
+
+    # getters and setters
+    def perfilframe(self, _nome: str, _created: str, _lastlogin: str) -> QFrame:
+        def inicio():
+            pass
+
+        def terminar():
+            pass
+
+        moldura = QFrame()
+        layout1 = QFormLayout()
+        layout2 = QHBoxLayout()
+
+        layout1.addRow(QLabel(f"<h2>{_nome}</h2><hr>"))
+        layout1.addRow("Criada:", QLabel(f"<b>{_created}</b>"))
+        layout1.addRow("Ultimo Início de Sessão:", QLabel(f"<b>{_lastlogin}</b>"))
+
+        inicio_botao = QPushButton("Iniciar")
+        inicio_botao.setDefault(True)
+        inicio_botao.clicked.connect(inicio)
+        terminar_botao = QPushButton("Terminar")
+        terminar_botao.clicked.connect(terminar)
+        layout2.addWidget(inicio_botao)
+        layout2.addWidget(terminar_botao)
+        layout1.addRow(layout2)
+
+        moldura.setLayout(layout1)
+        return moldura
 
     # menu-functions
     def _sair(self):
         resp = QMessageBox.question(self.ferramentas, 'Terminar o Programa', 'Obrigado por usar o nosso programa.\n'
                                                                              'Por favor considere visitar a nossa pagina e conhecer outras opções e serviços! - ArtesGC')
         if resp == QMessageBox.StandardButton.Yes:
-            webbrowser.open_new('https://artesgc.home.blog')
+            open_new('https://artesgc.home.blog')
         else:
             exit(0)
 
@@ -108,23 +161,16 @@ Faça Bom Proveito!<br><br>
 ™ ArtesGC, Inc.
 """)
 
-    @property
-    def debugpath(self) -> str:
-        if os.name == 'posix':
-            home = getoutput('echo $HOME')
-            return os.path.join(home, '.gcr-debug')
-        return '.gcr-debug'
-
     def _lang(self):
         def alterar():
             try:
                 config = ConfigParser()
-                os.makedirs(self.debugpath, exist_ok=True)
+                makedirs(debugpath(), exist_ok=True)
                 if escolha_idioma.currentText() == 'Portugues':
                     config['MAIN'] = {'lang': escolha_idioma.currentText()}
                 elif escolha_idioma.currentText() == 'English':
                     config['MAIN'] = {'lang': escolha_idioma.currentText()}
-                with open(f'{self.debugpath}/gcrypter.ini', 'w') as INIFILE:
+                with open(f'{debugpath()}/gcrypter.ini', 'w') as INIFILE:
                     config.write(INIFILE)
                 QMessageBox.information(self.ferramentas, 'Sucessso', 'O idioma definido será carregado após o reinício do programa!')
                 janela.close()
@@ -152,25 +198,171 @@ Faça Bom Proveito!<br><br>
         janela.show()
 
     # janelas
-    def inicio_sessao(self):
-        janela_inicio = QFrame()
-        self.tab.addTab(janela_inicio, 'Inicio Sessão')
+    def cadastro(self):
+        janela_cadastro = QDialog(self.ferramentas)
+        janela_cadastro.setWhatsThis('Cadastro: permite ao usuario personalizar uma conta com nome e senha!')
+        janela_cadastro.setWindowTitle('Cadastro')
+
+        layout = QFormLayout()
+
+        def guardar():
+            if utilizador_cd.text() == '' or codigo.text() == '':
+                QMessageBox.warning(self.ferramentas, 'Cadastro', 'Você Deve Preencher os Seus Dados Antes de Entrar..')
+            else:
+                if codigo.text() != codigo1.text():
+                    QMessageBox.warning(self.ferramentas, 'Cadastro', f'Lamento {utilizador_cd.text()} os Códigos Não Correspondem..')
+                else:
+                    makedirs(f'{debugpath()}/G6r-{utilizador_cd.text()}', exist_ok=True)
+                    with open(f'{debugpath()}/G6r-{utilizador_cd.text()}/utilizador.log', 'w+') as file_user:
+                        texto = f"""NOME: {utilizador_cd.text()}
+SENHA: {codigo.text()}
+RESPOSTA: {resposta.text()}"""
+                        doc1, doc2 = encrypt(texto)
+                        file_user.write(str(doc1) + '\n' + str(doc2))
+                    created(_username=utilizador_cd.text())
+                    janela_cadastro.destroy(True, True)
+                    QMessageBox.information(self.ferramentas, 'Cadastro',
+                                            f"Parabens {utilizador_cd.text()} o seu cadastro foi bem sucedido\n"
+                                            f"agora inicie sessão para disfrutar do programa..")
+
+        image = QLabel()
+        image.setPixmap(QPixmap("gcr-icons/01.jpg"))
+        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addRow(image)
+
+        utilizador_cd = QLineEdit()
+        utilizador_cd.setToolTip('Obrigatório')
+        utilizador_cd.setPlaceholderText('Digite o Seu Nome..')
+        layout.addRow(utilizador_cd)
+
+        codigo = QLineEdit()
+        codigo.setEchoMode(codigo.EchoMode.PasswordEchoOnEdit)
+        codigo.setClearButtonEnabled(True)
+        codigo.setToolTip('Obrigatório')
+        codigo.setPlaceholderText('Digite a Sua Senha..')
+        layout.addRow(codigo)
+
+        codigo1 = QLineEdit()
+        codigo1.setEchoMode(codigo1.EchoMode.PasswordEchoOnEdit)
+        codigo1.setClearButtonEnabled(True)
+        codigo1.setToolTip('Obrigatório')
+        codigo1.setPlaceholderText('Redigite a Sua Senha..')
+        codigo1.returnPressed.connect(guardar)
+        layout.addRow(codigo1)
+
+        resposta = QLineEdit()
+        resposta.setToolTip('Obrigatório')
+        resposta.setPlaceholderText('Digite o nome da coisa mais preciosa que você possui..')
+        layout.addRow(resposta)
+
+        guardar_botao = QPushButton('Entrar')
+        guardar_botao.setDefault(True)
+        guardar_botao.clicked.connect(guardar)
+        layout.addRow(guardar_botao)
+
+        janela_cadastro.setLayout(layout)
+        janela_cadastro.show()
+
+    def recuperar_senha(self):
+        janela_recuperar_senha = QDialog(self.ferramentas)
+        janela_recuperar_senha.setWhatsThis("Sobre: Recuperação da sessão do úsuario!\n"
+                                            "Poderá sempre iniciar sessão atravez desta opção caso esqueça permanentemente a sua senha..")
+        janela_recuperar_senha.setWindowTitle('Recuperar Senha')
 
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap("icons/01.jpg"))
+        image.setPixmap(QPixmap("gcr-icons/01.jpg"))
+        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addRow(image)
+
+        nome = QLineEdit()
+        nome.setToolTip('Obrigatório')
+        nome.setPlaceholderText('Digite o seu Nome..')
+        layout.addRow(nome)
+
+        resposta = QLineEdit()
+        resposta.setToolTip('Obrigatório')
+        resposta.setPlaceholderText('Digite o nome da coisa mais preciosa que você possui..')
+        layout.addRow(resposta)
+
+        def iniciar():
+            try:
+                with open(f'{debugpath()}/G6r-{nome.text()}/utilizador.log', 'r+') as file_user:
+                    file_ = file_user.readlines()
+                    file = decrypt(int(file_[0]), int(file_[1]))
+                    if nome.text() in file and resposta.text() in file:
+                        logged(_username=nome.text())
+                        janela_recuperar_senha.destroy(True, True)
+                        self.tab.removeTab(self.tab.currentIndex())
+                        return self._principal()
+                    else:
+                        question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
+                                                        f"Lamento {nome.text()} a sua Resposta está Errada ou Você Ainda Não Tem Uma Conta Criada..\n"
+                                                        f"Registre-se Para Continuar Usando o Programa!")
+                        if question == QMessageBox.StandardButton.Yes:
+                            janela_recuperar_senha.destroy(True, True)
+                            self.cadastro()
+                        elif question == QMessageBox.StandardButton.No:
+                            return exit(0)
+            except FileNotFoundError:
+                question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
+                                                f"Lamento {nome.text()} Você Ainda Não Tem Uma Conta Criada..\n"
+                                                f"Registre-se Para Continuar Usando o Programa!")
+                if question == QMessageBox.StandardButton.Yes:
+                    janela_recuperar_senha.destroy(True, True)
+                    self.cadastro()
+                elif question == QMessageBox.StandardButton.No:
+                    return exit(0)
+
+        confirmar = QPushButton('Confirmar')
+        confirmar.setDefault(True)
+        confirmar.clicked.connect(iniciar)
+        layout.addRow(confirmar)
+
+        janela_recuperar_senha.setLayout(layout)
+        janela_recuperar_senha.show()
+
+    # molduras
+    def usuarios_cadastrados(self):
+        moldura_usuarios_cadastrados = QFrame()
+        self.tab.addTab(moldura_usuarios_cadastrados, 'Usuarios Registrados')
+
+        layout = QVBoxLayout()
+        layout.addSpacing(10)
+
+        for _dir in listdir(f"{debugpath()}/"):
+            if path.isdir(_dir):
+                nomeusuario = perfilnome(_dir)
+                inifile = ConfigParser().read(f'{debugpath()}/G6r-{nomeusuario}/a5t_d5s.ini')
+                criada = inifile['MAIN']['created']
+                lastlogin = inifile['MAIN']['last_login']
+                layout.addWidget(self.perfilframe(_nome=nomeusuario,
+                                                  _created=criada,
+                                                  _lastlogin=lastlogin))
+
+        moldura_usuarios_cadastrados.setLayout(layout)
+
+    def inicio_sessao(self):
+        moldura_inicio_sessao = QFrame()
+        self.tab.addTab(moldura_inicio_sessao, 'Inicio Sessão')
+
+        layout = QFormLayout()
+
+        image = QLabel()
+        image.setPixmap(QPixmap("gcr-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
 
         def iniciar():
             try:
-                with open(f'{self.debugpath}/G6r-{utilizador_is.text()}/utilizador.log', 'r+') as file_user:
+                with open(f'{debugpath()}/G6r-{utilizador_is.text()}/utilizador.log', 'r+') as file_user:
                     file_ = file_user.readlines()
                     file = decrypt(int(file_[0]), int(file_[1]))
                     if utilizador_is.text() in file and codigo.text() in file:
                         self.tab.removeTab(self.tab.currentIndex())
                         self.utilizador = utilizador_is.text()
+                        logged(_username=self.utilizador)
                         return self._principal()
                     else:
                         question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
@@ -217,132 +409,8 @@ Faça Bom Proveito!<br><br>
         cadastro_botao.clicked.connect(self.cadastro)
         layout.addRow(cadastro_botao)
 
-        janela_inicio.setLayout(layout)
+        moldura_inicio_sessao.setLayout(layout)
 
-    def cadastro(self):
-        janela_cadastro = QDialog(self.ferramentas)
-        janela_cadastro.setWhatsThis('Cadastro: permite ao usuario personalizar uma conta com nome e senha!')
-        janela_cadastro.setWindowTitle('Cadastro')
-
-        layout = QFormLayout()
-
-        def guardar():
-            if utilizador_cd.text() == '' or codigo.text() == '':
-                QMessageBox.warning(self.ferramentas, 'Cadastro', 'Você Deve Preencher os Seus Dados Antes de Entrar..')
-            else:
-                if codigo.text() != codigo1.text():
-                    QMessageBox.warning(self.ferramentas, 'Cadastro', f'Lamento {utilizador_cd.text()} os Códigos Não Correspondem..')
-                else:
-                    os.makedirs(f'{self.debugpath}/G6r-{utilizador_cd.text()}', exist_ok=True)
-                    with open(f'{self.debugpath}/G6r-{utilizador_cd.text()}/utilizador.log', 'w+') as file_user:
-                        texto = f"""NOME: {utilizador_cd.text()}
-SENHA: {codigo.text()}
-RESPOSTA: {resposta.text()}"""
-                        doc1, doc2 = encrypt(texto)
-                        file_user.write(str(doc1) + '\n' + str(doc2))
-                    janela_cadastro.destroy(True, True)
-                    QMessageBox.information(self.ferramentas, 'Cadastro',
-                                            f"Parabens {utilizador_cd.text()} o seu cadastro foi bem sucedido\n"
-                                            f"agora inicie sessão para disfrutar do programa..")
-
-        image = QLabel()
-        image.setPixmap(QPixmap("icons/01.jpg"))
-        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(image)
-
-        utilizador_cd = QLineEdit()
-        utilizador_cd.setToolTip('Obrigatório')
-        utilizador_cd.setPlaceholderText('Digite o Seu Nome..')
-        layout.addRow(utilizador_cd)
-
-        codigo = QLineEdit()
-        codigo.setEchoMode(codigo.EchoMode.PasswordEchoOnEdit)
-        codigo.setClearButtonEnabled(True)
-        codigo.setToolTip('Obrigatório')
-        codigo.setPlaceholderText('Digite a Sua Senha..')
-        layout.addRow(codigo)
-
-        codigo1 = QLineEdit()
-        codigo1.setEchoMode(codigo1.EchoMode.PasswordEchoOnEdit)
-        codigo1.setClearButtonEnabled(True)
-        codigo1.setToolTip('Obrigatório')
-        codigo1.setPlaceholderText('Redigite a Sua Senha..')
-        codigo1.returnPressed.connect(guardar)
-        layout.addRow(codigo1)
-
-        resposta = QLineEdit()
-        resposta.setToolTip('Obrigatório')
-        resposta.setPlaceholderText('Digite o nome da coisa mais preciosa que você possui..')
-        layout.addRow(resposta)
-
-        guardar_botao = QPushButton('Entrar')
-        guardar_botao.setDefault(True)
-        guardar_botao.clicked.connect(guardar)
-        layout.addRow(guardar_botao)
-
-        janela_cadastro.setLayout(layout)
-        janela_cadastro.show()
-
-    def recuperar_senha(self):
-        janela_recuperar_senha = QDialog(self.ferramentas)
-        janela_recuperar_senha.setWhatsThis("Sobre: Recuperação da sessão do úsuario!\n"
-                                            "Poderá sempre iniciar sessão atravez desta opção caso esqueça permanentemente a sua senha..")
-        janela_recuperar_senha.setWindowTitle('Recuperar Senha')
-
-        layout = QFormLayout()
-
-        image = QLabel()
-        image.setPixmap(QPixmap("icons/01.jpg"))
-        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(image)
-
-        nome = QLineEdit()
-        nome.setToolTip('Obrigatório')
-        nome.setPlaceholderText('Digite o seu Nome..')
-        layout.addRow(nome)
-
-        resposta = QLineEdit()
-        resposta.setToolTip('Obrigatório')
-        resposta.setPlaceholderText('Digite o nome da coisa mais preciosa que você possui..')
-        layout.addRow(resposta)
-
-        def iniciar():
-            try:
-                with open(f'{self.debugpath}/G6r-{nome.text()}/utilizador.log', 'r+') as file_user:
-                    file_ = file_user.readlines()
-                    file = decrypt(int(file_[0]), int(file_[1]))
-                    if nome.text() in file and resposta.text() in file:
-                        janela_recuperar_senha.destroy(True, True)
-                        self.tab.removeTab(self.tab.currentIndex())
-                        return self._principal()
-                    else:
-                        question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
-                                                        f"Lamento {nome.text()} a sua Resposta está Errada ou Você Ainda Não Tem Uma Conta Criada..\n"
-                                                        f"Registre-se Para Continuar Usando o Programa!")
-                        if question == QMessageBox.StandardButton.Yes:
-                            janela_recuperar_senha.destroy(True, True)
-                            self.cadastro()
-                        elif question == QMessageBox.StandardButton.No:
-                            return exit(0)
-            except FileNotFoundError:
-                question = QMessageBox.question(self.ferramentas, 'Falha ao Iniciar Sessão',
-                                                f"Lamento {nome.text()} Você Ainda Não Tem Uma Conta Criada..\n"
-                                                f"Registre-se Para Continuar Usando o Programa!")
-                if question == QMessageBox.StandardButton.Yes:
-                    janela_recuperar_senha.destroy(True, True)
-                    self.cadastro()
-                elif question == QMessageBox.StandardButton.No:
-                    return exit(0)
-
-        confirmar = QPushButton('Confirmar')
-        confirmar.setDefault(True)
-        confirmar.clicked.connect(iniciar)
-        layout.addRow(confirmar)
-
-        janela_recuperar_senha.setLayout(layout)
-        janela_recuperar_senha.show()
-
-    # molduras
     def _principal(self):
         if self.moldura_principal is None:
             return self.principal()
@@ -368,7 +436,7 @@ RESPOSTA: {resposta.text()}"""
         layout.addRow(intro)
 
         image = QLabel()
-        image.setPixmap(QPixmap('icons/02.jpg'))
+        image.setPixmap(QPixmap('gcr-icons/02.jpg'))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
 
@@ -418,8 +486,8 @@ RESPOSTA: {resposta.text()}"""
                 QMessageBox.critical(self.ferramentas, 'Falha', f"Lamento {self.utilizador}, "
                                                                 "por favor atribua um nome ao documento antes de guarda-lo!")
             else:
-                os.makedirs(f'{self.debugpath}/G6r-{self.utilizador}/docs', exist_ok=True)
-                with open(f'{self.debugpath}/G6r-{self.utilizador}/docs/{titulo.text()}.gc', 'w+') as file_enc:
+                makedirs(f'{debugpath()}/G6r-{self.utilizador}/docs', exist_ok=True)
+                with open(f'{debugpath()}/G6r-{self.utilizador}/docs/{titulo.text()}.gc', 'w+') as file_enc:
                     doc1, doc2 = encrypt(texto.toPlainText())
                     file_enc.write(f"{doc1}\n{doc2}")
                 QMessageBox.information(self.ferramentas, 'Concluido', 'Codificação Bem Sucedida..')
@@ -495,7 +563,7 @@ RESPOSTA: {resposta.text()}"""
             return self.decodificar()
 
     def decodificar(self):
-        nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'{self.debugpath}/G6r-{self.utilizador}/docs', filter='Ficheiros (*.gc)', caption='Selecione o arquivo')
+        nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'{debugpath()}/G6r-{self.utilizador}/docs', filter='Ficheiros (*.gc)', caption='Selecione o arquivo')
         try:
             with open(nome_file_open[0], 'r+') as file_decod:
                 file_ = file_decod.readlines()
@@ -541,7 +609,7 @@ RESPOSTA: {resposta.text()}"""
             return self.editar()
 
     def editar(self):
-        nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'{self.debugpath}/G6r-{self.utilizador}/docs', filter='Ficheiros (*.gc)', caption='Selecione o arquivo')
+        nome_file_open = QFileDialog.getOpenFileName(parent=self.ferramentas, directory=f'{debugpath()}/G6r-{self.utilizador}/docs', filter='Ficheiros (*.gc)', caption='Selecione o arquivo')
         try:
             with open(nome_file_open[0], 'r+') as file_decod:
                 file_ = file_decod.readlines()
