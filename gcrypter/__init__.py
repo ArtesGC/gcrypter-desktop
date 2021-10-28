@@ -7,11 +7,9 @@
 #  Foco Fé Força Paciência                                                     *
 #  Allah no Comando.                                                           *
 # ******************************************************************************
-from os import path, name
 from configparser import ConfigParser
+from os import path
 from random import randint
-from secrets import token_bytes
-from subprocess import getoutput
 from sys import argv
 from time import sleep
 
@@ -21,32 +19,6 @@ from PyQt6.QtWidgets import *
 
 from gcrypter.en import EN
 from gcrypter.pt import PT
-
-
-def encrypt(p: str):
-    """funcao encriptadora"""
-    encriptar = p.encode()
-    encriptar_ = token_bytes(len(p))
-
-    encriptado = int.from_bytes(encriptar, 'big')
-    encriptado_ = int.from_bytes(encriptar_, 'big')
-
-    encriptado_final = encriptado ^ encriptado_
-    return encriptado_final, encriptado_
-
-
-def decrypt(p: int, q: int):
-    """funcao desencriptadora"""
-    palavra_encriptada = int(p) ^ int(q)
-    desencriptada = palavra_encriptada.to_bytes((palavra_encriptada.bit_length() + 7) // 8, 'big')
-    return desencriptada.decode()
-
-
-def debugpath() -> str:
-    if name == 'posix':
-        home = getoutput('echo $HOME')
-        return path.join(home, '.gcr-debug')
-    return '.gcr-debug'
 
 
 class G6R:
