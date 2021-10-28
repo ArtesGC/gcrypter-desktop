@@ -11,30 +11,9 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
-from gcrypter import debugpath, encrypt, decrypt
+from gcrypter.globalfunc import debugpath, encrypt, decrypt, perfilnome, created, logged, localpath
 
-theme = open('gcr-themes/gcrypter.qss').read().strip()
-
-
-def perfilnome(_folder: str) -> str or None:
-    nome = compile("G6r-[aA-zZ]+")
-    if nome.match(_folder):
-        return _folder.split("-")[-1]
-    return None
-
-
-def created(_username: str):
-    config = ConfigParser()
-    config['MAIN'] = {'created': datetime.today()}
-    with open(f"{debugpath()}/G6r-{_username}/a5t_d5s.ini", "w+") as inifile:
-        config.write(inifile)
-
-
-def logged(_username: str):
-    config = ConfigParser()
-    config['MAIN'] = {'last_login': datetime.today()}
-    with open(f"{debugpath()}/G6r-{_username}/a5t_d5s.ini", "w+") as inifile:
-        config.write(inifile)
+theme = open(f'{localpath()}/gcr-themes/gcrypter.qss').read().strip()
 
 
 class PT:
@@ -42,7 +21,7 @@ class PT:
         self.ferramentas = QDialog()
         self.ferramentas.setFixedSize(QSize(700, 650))
         self.ferramentas.setWindowTitle('GCrypter')
-        self.ferramentas.setWindowIcon(QIcon('gcr-icons/favicon-192x192.png'))
+        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/gcr-icons/favicon-192x192.png'))
         self.ferramentas.setStyleSheet(theme)
 
         # layout
@@ -226,7 +205,7 @@ RESPOSTA: {resposta.text()}"""
                                             f"agora inicie sessão para disfrutar do programa..")
 
         image = QLabel()
-        image.setPixmap(QPixmap("gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
 
@@ -272,7 +251,7 @@ RESPOSTA: {resposta.text()}"""
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap("gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
 
@@ -350,7 +329,7 @@ RESPOSTA: {resposta.text()}"""
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap("gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
 
@@ -436,7 +415,7 @@ RESPOSTA: {resposta.text()}"""
         layout.addRow(intro)
 
         image = QLabel()
-        image.setPixmap(QPixmap('gcr-icons/02.jpg'))
+        image.setPixmap(QPixmap(f'{localpath()}/gcr-icons/02.jpg'))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
 
