@@ -84,7 +84,7 @@ QToolButton:pressed{
 
 QPushButton{
     border-style: solid;
-    border-color: #050a0e;
+    border-color: white /*#050a0e*/;
     border-width: 1px;
     border-radius: 5px;
     color: #FFFFFF /*#d3dae3*/;
@@ -94,7 +94,7 @@ QPushButton{
 
 QPushButton:default{
     border-style: solid;
-    border-color: #050a0e;
+    border-color: white /*#050a0e*/;
     border-width: 1px;
     border-radius: 5px;
     color: #FFFFFF;
