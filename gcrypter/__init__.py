@@ -54,10 +54,10 @@ class G6R:
             app.ferramentas.show()
         else:
             perg = QMessageBox.question(self.janela, "X_X", "- Am sorry, the language set in your database is unsupported, Would you like to reconfigure it?\n\n"
-                                                            "- Lamento, o idioma definido no sua base de dados não é suportada, Desejaria reconfigura-la?")
+                                                            "- Lamento, o idioma definido na sua base de dados não é suportada, Desejaria reconfigura-la?")
             if perg == QMessageBox.StandardButton.Yes:
                 G6RDB().update_config(_lang='English')
-                QMessageBox.information(self.janela, "^_^", "")
+                QMessageBox.information(self.janela, "^_^", "🤓👌🏽")
             return after(_sec=10, _do=exit(0))
 
 
