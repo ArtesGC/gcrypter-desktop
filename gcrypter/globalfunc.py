@@ -1,9 +1,8 @@
 # ******************************************************************************
 #  (c) 2019-2021 Nurul-GC.                                                     *
 # ******************************************************************************
-from configparser import ConfigParser
 from datetime import datetime
-from os import path
+from os import path, name
 from re import compile
 from secrets import token_bytes
 from subprocess import getoutput
@@ -43,18 +42,25 @@ def perfilnome(_folder: str) -> str or None:
 
 
 def created(_username: str):
-    config = ConfigParser()
-    config['MAIN'] = {'created': datetime.today()}
-    with open(f"{debugpath()}/G6r-{_username}/a5t_d5s.ini", "w+") as inifile:
-        config.write(inifile)
+    from gcrypter.db import G6RDB
+    db = G6RDB()
+    date_created = datetime.today()
+    return db.insert_user(_nome=_username, _created=date_created)
 
 
 def logged(_username: str):
-    config = ConfigParser()
-    config['MAIN'] = {'last_login': datetime.today()}
-    with open(f"{debugpath()}/G6r-{_username}/a5t_d5s.ini", "w+") as inifile:
-        config.write(inifile)
+    from gcrypter.db import G6RDB
+    db = G6RDB()
+    date_last_login = datetime.today()
+    return db.update_lastlogin(_nome=_username, _last_login=date_last_login)
 
 
 def localpath() -> str:
     return path.abspath(path.curdir)
+
+
+def after(_sec: int, _do):
+    n = 0
+    while n < _sec:
+        n += 1
+    return _do
