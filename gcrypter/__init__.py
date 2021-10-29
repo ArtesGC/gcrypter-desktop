@@ -7,17 +7,18 @@
 #  Foco Fé Força Paciência                                                     *
 #  Allah no Comando.                                                           *
 # ******************************************************************************
-from configparser import ConfigParser
-from os import path
+from os import makedirs
 from random import randint
-from sys import argv
+from sys import argv, exit
 from time import sleep
 
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
+from gcrypter.db import G6RDB
 from gcrypter.en import EN
+from gcrypter.globalfunc import debugpath, localpath, after
 from gcrypter.pt import PT
 
 
@@ -26,11 +27,11 @@ class G6R:
         self.gc = QApplication(argv)
 
         # application font
-        QFontDatabase.addApplicationFont("gcr-fonts/Abel.ttf")
+        QFontDatabase.addApplicationFont(f"{localpath()}/gcr-fonts/Abel.ttf")
 
-        img = QPixmap("gcr-icons/gcrypter-logo-02.png").scaled(QSize(500, 500))
+        img = QPixmap(f"{localpath()}/gcr-icons/gcrypter-logo-01.png").scaled(QSize(500, 500))
         self.align = int(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignAbsolute)
-        self.color = Qt.GlobalColor.darkGreen
+        self.color = Qt.GlobalColor.green
 
         self.janela = QSplashScreen(img)
         self.janela.setStyleSheet(theme)
@@ -39,29 +40,29 @@ class G6R:
 
     def iniciar(self):
         n = 0
-        inifile = ConfigParser()
+        config = G6RDB().return_data(_table='config')[0]
         load = 0
         while load < 100:
             self.janela.showMessage(f"Loading ... {load}%", self.align, self.color)
             sleep(0.5)
             load += randint(1, 10)
-        if path.exists(f'{debugpath()}/gcrypter.ini'):
-            inifile.read(f'{debugpath()}/gcrypter.ini')
-            if inifile['MAIN']['lang'] == 'English':
-                app = EN()
-                app.ferramentas.show()
-            elif inifile['MAIN']['lang'] == 'Portugues':
-                app = PT()
-                app.ferramentas.show()
-            else:
-                QMessageBox.critical(QWidget, 'X_X', "- Am sorry, the language set in your [imagc.ini] file is unsupported!\n"
-                                                     "- Lamento, o idioma definido no seu ficheiro [imagc.ini] não é suportado!")
-        else:
+        if config[1] == 'English':
             app = EN()
             app.ferramentas.show()
+        elif config[1] == 'Portugues':
+            app = PT()
+            app.ferramentas.show()
+        else:
+            perg = QMessageBox.question(self.janela, "X_X", "- Am sorry, the language set in your database is unsupported, Would you like to reconfigure it?\n\n"
+                                                            "- Lamento, o idioma definido no sua base de dados não é suportada, Desejaria reconfigura-la?")
+            if perg == QMessageBox.StandardButton.Yes:
+                G6RDB().update_config(_lang='English')
+                QMessageBox.information(self.janela, "^_^", "")
+            return after(_sec=10, _do=exit(0))
 
 
 if __name__ == '__main__':
+    makedirs(debugpath(), exist_ok=True)
     theme = open('gcr-themes/gcrypter.qss').read().strip()
     gcApp = G6R()
     gcApp.gc.exec()
