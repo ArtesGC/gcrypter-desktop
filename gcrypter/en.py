@@ -1,17 +1,15 @@
 # ******************************************************************************
 #  (c) 2019-2021 Nurul-GC.                                                     *
 # ******************************************************************************
-from configparser import ConfigParser
-from datetime import datetime
-from os import path, makedirs, listdir
-from re import compile
+from os import makedirs, listdir
 from webbrowser import open_new
 
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
-from gcrypter.globalfunc import debugpath, encrypt, decrypt, perfilnome, created, logged, localpath
+from gcrypter.db import G6RDB
+from gcrypter.globalfunc import debugpath, encrypt, decrypt, created, logged, localpath
 
 theme = open(f'{localpath()}/gcr-themes/gcrypter.qss').read().strip()
 
@@ -19,7 +17,7 @@ theme = open(f'{localpath()}/gcr-themes/gcrypter.qss').read().strip()
 class EN:
     def __init__(self):
         self.ferramentas = QDialog()
-        self.ferramentas.setFixedSize(QSize(700, 650))
+        self.ferramentas.setFixedSize(QSize(500, 500))
         self.ferramentas.setWindowTitle('GCrypter')
         self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/gcr-icons/favicon-192x192.png'))
         self.ferramentas.setStyleSheet(theme)
@@ -68,7 +66,7 @@ class EN:
         self.moldura_decodificar = None
 
         self.ferramentas.setLayout(layout)
-        if len(listdir(debugpath())) > 1:
+        if len(listdir(debugpath())) >= 1:
             self.usuarios_cadastrados()
         else:
             self.inicio_sessao()
@@ -82,21 +80,29 @@ class EN:
             pass
 
         moldura = QFrame()
+        moldura.setStyleSheet("QFrame{color: white;"
+                              "height: 200px;"
+                              "background-color: #222b2e;"
+                              "border-color: white;"
+                              "border-width: 1px;"
+                              "border-style: solid;"
+                              "border-radius: 5px;}")
         layout1 = QFormLayout()
-        layout2 = QHBoxLayout()
+        layout_btns = QHBoxLayout()
 
-        layout1.addRow(QLabel(f"<h2>{_nome}</h2><hr>"))
+        layout1.addRow(QLabel(f"<h3>{_nome}</h3><hr>"))
         layout1.addRow("Created:", QLabel(f"<b>{_created}</b>"))
         layout1.addRow("Last Login:", QLabel(f"<b>{_lastlogin}</b>"))
 
         inicio_botao = QPushButton("Login")
         inicio_botao.setDefault(True)
         inicio_botao.clicked.connect(inicio)
+        layout_btns.addWidget(inicio_botao)
+
         terminar_botao = QPushButton("Logout")
         terminar_botao.clicked.connect(terminar)
-        layout2.addWidget(inicio_botao)
-        layout2.addWidget(terminar_botao)
-        layout1.addRow(layout2)
+        layout_btns.addWidget(terminar_botao)
+        layout1.addRow(layout_btns)
 
         moldura.setLayout(layout1)
         return moldura
@@ -112,45 +118,40 @@ class EN:
 
     def _sobre(self):
         QMessageBox.information(self.ferramentas, "About", """<ul>
-<li>Name: GCrypter</li>
-<li>Version: 0.9-112021</li>
-<li>Designer & Programmer: Nurul-GC</li>
-<li>Company: ArtesGC, Inc.</li>
+<li>Name: <b>GCrypter</b></li>
+<li>Version: <b>0.9-112021</b></li>
+<li>Designer & Programmer: <b>Nurul-GC</b></li>
+<li>Company: <b>ArtesGC, Inc.</b></li>
 </ul>""")
 
     def _instr(self):
         QMessageBox.information(self.ferramentas, "Instructions", """
-Hello, Welcome to GCrypter<br>
+<h3>Hello, Welcome to GCrypter</h3><hr>
+
 It is a useful and practical tool for those<br>
 who like to keep their files very well protected<br>
 without having to worry about possible intrusions<br>
-or even unwanted disclosures.<br>
+or even unwanted disclosures.
 
 <ul>
-<li>GCrypter offers you options and a simple environment<br>
+<li>The <b>GCrypter</b> offers you options and a simple environment<br>
 to you as an end user be able to register your thoughts<br>
-and notes, saving them after ENCRYPTED..</li>
-<li>There is also an option for DECRYPT the same files..</li>
-<li>And even an option for EDIT files already encrypted.</li>
+and notes, saving them after <b>ENCRYPTED</b>..</li>
+<li>There is also an option to <b>DECRYPT</b> the same files..</li>
+<li>And even an option to <b>EDIT</b> files already encrypted..</li>
 </ul>
 
 Thank you very much for Support!<br>
 Enjoy!<br><br>
 
-© 2019-2021 Nurul-GC<br>
-™ ArtesGC, Inc.""")
+<b>© 2019-2021 Nurul-GC<br>
+™ ArtesGC, Inc.</b>
+""")
 
     def _lang(self):
         def alterar():
             try:
-                config = ConfigParser()
-                makedirs(debugpath(), exist_ok=True)
-                if escolha_idioma.currentText() == 'Portugues':
-                    config['MAIN'] = {'lang': escolha_idioma.currentText()}
-                elif escolha_idioma.currentText() == 'English':
-                    config['MAIN'] = {'lang': escolha_idioma.currentText()}
-                with open(f'{debugpath()}/gcrypter.ini', 'w') as INIFILE:
-                    config.write(INIFILE)
+                G6RDB().update_config(_lang=escolha_idioma.currentText())
                 QMessageBox.information(self.ferramentas, 'Successsful', 'The language set will be loaded after restart the program!')
                 janela.close()
             except Exception as erro:
@@ -208,6 +209,7 @@ ANSWER: {resposta.text()}"""
         image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
+        layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
 
         utilizador_cd = QLineEdit()
         utilizador_cd.setToolTip('Required')
@@ -254,6 +256,7 @@ ANSWER: {resposta.text()}"""
         image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
+        layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
 
         nome = QLineEdit()
         nome.setToolTip('Required')
@@ -304,21 +307,22 @@ ANSWER: {resposta.text()}"""
 
     # molduras
     def usuarios_cadastrados(self):
-        moldura_usuarios_cadastrados = QFrame()
+        moldura_usuarios_cadastrados = QScrollArea()
         self.tab.addTab(moldura_usuarios_cadastrados, 'Registered Users')
 
         layout = QVBoxLayout()
         layout.addSpacing(10)
+        layout.addWidget(QLabel("<h2>Quick Login:</h2>"))
 
-        for _dir in listdir(f"{debugpath()}/"):
-            if path.isdir(_dir):
-                nomeusuario = perfilnome(_dir)
-                inifile = ConfigParser().read(f'{debugpath()}/G6r-{nomeusuario}/a5t_d5s.ini')
-                criada = inifile['MAIN']['created']
-                lastlogin = inifile['MAIN']['last_login']
-                layout.addWidget(self.perfilframe(_nome=nomeusuario,
-                                                  _created=criada,
-                                                  _lastlogin=lastlogin))
+        for user in G6RDB().return_data(_table='users'):
+            nomeusuario = user[1]
+            criada = user[2]
+            lastlogin = user[3]
+            layout.addWidget(self.perfilframe(_nome=nomeusuario, _created=criada, _lastlogin=lastlogin))
+
+        cadastro_botao = QPushButton('Register')
+        cadastro_botao.clicked.connect(self.cadastro)
+        layout.addWidget(cadastro_botao)
 
         moldura_usuarios_cadastrados.setLayout(layout)
 
@@ -327,11 +331,9 @@ ANSWER: {resposta.text()}"""
         self.tab.addTab(janela_inicio, 'Home Session')
 
         layout = QFormLayout()
+        layout.setSpacing(30)
 
-        image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
-        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(image)
+        layout.addRow(QLabel("<h2>Fill Your Details:</h2>"))
 
         def iniciar():
             try:
@@ -379,14 +381,16 @@ ANSWER: {resposta.text()}"""
         recuperar_senha.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(recuperar_senha)
 
+        layout_btns = QHBoxLayout()
         iniciar_botao = QPushButton('Login')
         iniciar_botao.clicked.connect(iniciar)
         iniciar_botao.setDefault(True)
-        layout.addRow(iniciar_botao)
+        layout_btns.addWidget(iniciar_botao)
 
         cadastro_botao = QPushButton('Register')
         cadastro_botao.clicked.connect(self.cadastro)
-        layout.addRow(cadastro_botao)
+        layout_btns.addWidget(cadastro_botao)
+        layout.addRow(layout_btns)
 
         janela_inicio.setLayout(layout)
 
@@ -406,6 +410,7 @@ ANSWER: {resposta.text()}"""
         self.moldura_principal = QFrame()
         self.tab.addTab(self.moldura_principal, 'Welcome')
         self.tab.setCurrentWidget(self.moldura_principal)
+        self.ferramentas.setFixedSize(QSize(650, 650))
 
         layout = QFormLayout()
 
