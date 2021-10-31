@@ -58,6 +58,7 @@ QToolButton {
 
 QToolButton:hover{
     border-style: solid;
+    text-decoration: underline;
     border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
     border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
     border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
@@ -104,6 +105,7 @@ QPushButton:default{
 
 QPushButton:hover{
     border-style: solid;
+    text-decoration: underline;
     border-top-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 #C0DB50, stop:0.4 #C0DB50, stop:0.5 #100E19, stop:1 #100E19);
     border-bottom-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 #100E19, stop:0.5 #100E19, stop:0.6 #C0DB50, stop:1 #C0DB50);
     border-left-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #C0DB50, stop:0.3 #C0DB50, stop:0.7 #100E19, stop:1 #100E19);
@@ -307,6 +309,7 @@ QCheckBox:hover {
 
 QCheckBox::indicator:checked {
     padding: 5px;
+    text-decoration: underline;
     border-radius: 5px;
     border-width: 1px;
     border-style: solid;
@@ -334,6 +337,7 @@ QRadioButton {
 }
 
 QRadioButton::indicator:checked {
+    text-decoration: underline;
     height: 10px;
     width: 10px;
     border-style:solid;
@@ -344,7 +348,7 @@ QRadioButton::indicator:checked {
     background-color: qradialgradient(cx:0.5, cy:0.5, radius:0.4,fx:0.5, fy:0.5, stop:0 #4fa08b, stop:1 #1e282c);
 }
 
-QRadioButton::indicator:!checked {
+QRadioButton::indicator:unchecked {
     height: 10px;
     width: 10px;
     border-style:solid;
