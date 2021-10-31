@@ -9,9 +9,9 @@ from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
 from gcrypter.db import G6RDB
-from gcrypter.globalfunc import debugpath, encrypt, decrypt, created, logged, localpath
+from gcrypter.gfuns import debugpath, encrypt, decrypt, created, logged, localpath
 
-theme = open(f'{localpath()}/gcr-themes/gcrypter.qss').read().strip()
+theme = open(f'{localpath()}/g6r-themes/g6rlight.qss').read().strip()
 
 
 class EN:
@@ -19,7 +19,7 @@ class EN:
         self.ferramentas = QDialog()
         self.ferramentas.setFixedSize(QSize(500, 500))
         self.ferramentas.setWindowTitle('GCrypter')
-        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/gcr-icons/favicon-192x192.png'))
+        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/g6r-icons/favicon-192x192.png'))
         self.ferramentas.setStyleSheet(theme)
 
         # layout
@@ -58,6 +58,7 @@ class EN:
         layout.addWidget(website)
 
         # global-variables
+        self.gdb = G6RDB()
         self.utilizador = None
         self.moldura_editar = None
         self.moldura_principal = None
@@ -66,40 +67,38 @@ class EN:
         self.moldura_decodificar = None
 
         self.ferramentas.setLayout(layout)
-        if len(listdir(debugpath())) >= 1:
-            self.usuarios_cadastrados()
-        else:
-            self.inicio_sessao()
+        self.usuarios_cadastrados()
 
     # getters and setters
     def perfilframe(self, _nome: str, _created: str, _lastlogin: str) -> QFrame:
         def inicio():
-            pass
+            self.tab.removeTab(self.tab.currentIndex())
+            return self.inicio_sessao()
 
         def terminar():
             pass
 
         moldura = QFrame()
-        moldura.setStyleSheet("QFrame{color: white;"
-                              "height: 200px;"
-                              "background-color: #222b2e;"
+        moldura.setStyleSheet("border-radius: 5px;"
                               "border-color: white;"
                               "border-width: 1px;"
-                              "border-style: solid;"
-                              "border-radius: 5px;}")
+                              "border-style: solid;")
+
         layout1 = QFormLayout()
         layout_btns = QHBoxLayout()
 
-        layout1.addRow(QLabel(f"<h3>{_nome}</h3><hr>"))
-        layout1.addRow("Created:", QLabel(f"<b>{_created}</b>"))
-        layout1.addRow("Last Login:", QLabel(f"<b>{_lastlogin}</b>"))
+        layout1.addRow(QLabel(f"<h3>{_nome}</h3>"
+                              f"Created: <b>{_created}</b><br>"
+                              f"Last Login: <b>{_lastlogin}</b>"))
 
         inicio_botao = QPushButton("Login")
         inicio_botao.setDefault(True)
+        inicio_botao.setStyleSheet("QPushButton:hover{text-decoration: underline;}")
         inicio_botao.clicked.connect(inicio)
         layout_btns.addWidget(inicio_botao)
 
         terminar_botao = QPushButton("Logout")
+        terminar_botao.setStyleSheet("QPushButton:hover{text-decoration: underline;}")
         terminar_botao.clicked.connect(terminar)
         layout_btns.addWidget(terminar_botao)
         layout1.addRow(layout_btns)
@@ -151,7 +150,7 @@ Enjoy!<br><br>
     def _lang(self):
         def alterar():
             try:
-                G6RDB().update_config(_lang=escolha_idioma.currentText())
+                self.gdb.update_config(_lang=escolha_idioma.currentText())
                 QMessageBox.information(self.ferramentas, 'Successsful', 'The language set will be loaded after restart the program!')
                 janela.close()
             except Exception as erro:
@@ -200,7 +199,7 @@ ANSWER: {resposta.text()}"""
                         doc1, doc2 = encrypt(texto)
                         file_user.write(str(doc1) + '\n' + str(doc2))
                     created(_username=utilizador_cd.text())
-                    janela_cadastro.destroy(True, True)
+                    janela_cadastro.destroy()
                     QMessageBox.information(self.ferramentas, 'Register',
                                             f"Congratulation {utilizador_cd.text()} your registration was successful\n"
                                             f"now log in to enjoy the program..")
@@ -275,7 +274,7 @@ ANSWER: {resposta.text()}"""
                     file = decrypt(int(file_[0]), int(file_[1]))
                     if nome.text() in file and resposta.text() in file:
                         logged(_username=nome.text())
-                        janela_recuperar_senha.destroy(True, True)
+                        janela_recuperar_senha.destroy()
                         self.tab.removeTab(self.tab.currentIndex())
                         return self._principal()
                     else:
@@ -283,7 +282,7 @@ ANSWER: {resposta.text()}"""
                                                         f"Am sorry {nome.text()} your answer is wrong or you don't have an account yet..\n"
                                                         f"Register to keep using the program!")
                         if question == QMessageBox.StandardButton.Yes:
-                            janela_recuperar_senha.destroy(True, True)
+                            janela_recuperar_senha.destroy()
                             self.cadastro()
                         elif question == QMessageBox.StandardButton.No:
                             return exit(0)
@@ -292,7 +291,7 @@ ANSWER: {resposta.text()}"""
                                                 f"Am sorry {nome.text()} You don't have an account yet..\n"
                                                 f"Register to keep using the program!")
                 if question == QMessageBox.StandardButton.Yes:
-                    janela_recuperar_senha.destroy(True, True)
+                    janela_recuperar_senha.destroy()
                     self.cadastro()
                 elif question == QMessageBox.StandardButton.No:
                     return exit(0)
@@ -314,11 +313,14 @@ ANSWER: {resposta.text()}"""
         layout.addSpacing(10)
         layout.addWidget(QLabel("<h2>Quick Login:</h2>"))
 
-        for user in G6RDB().return_data(_table='users'):
-            nomeusuario = user[1]
-            criada = user[2]
-            lastlogin = user[3]
-            layout.addWidget(self.perfilframe(_nome=nomeusuario, _created=criada, _lastlogin=lastlogin))
+        if len(self.gdb.return_data(_table='users')) > 0:
+            for user in self.gdb.return_data(_table='users'):
+                nomeusuario = user[1]
+                criada = user[2]
+                lastlogin = user[3]
+                layout.addWidget(self.perfilframe(_nome=nomeusuario, _created=criada, _lastlogin=lastlogin))
+        else:
+            layout.addWidget(QLabel("<i>None accounts registered yet...</i>"))
 
         cadastro_botao = QPushButton('Register')
         cadastro_botao.clicked.connect(self.cadastro)
