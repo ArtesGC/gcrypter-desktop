@@ -1,5 +1,5 @@
 import sqlite3
-from gcrypter.globalfunc import debugpath
+from gcrypter.gfuns import debugpath
 
 
 class G6RDB:
@@ -28,7 +28,7 @@ class G6RDB:
         if not db:
             raise ConnectionError(f'Erro ao conectar a db!\nconnection_result:{db}')
 
-    def insert_user(self, _nome, _created):
+    def insert_user(self, _nome=None, _created=None):
         db = self.connect_db()
         sql_value = "CREATE TABLE IF NOT EXISTS users" \
                     "(id integer primary key autoincrement," \
@@ -37,12 +37,13 @@ class G6RDB:
                     " last_login varchar(30));"
         self.create_table(_sql_value=sql_value)
         try:
-            executor = db.cursor()
-            resultado = executor.execute('INSERT INTO users (nome, created) '
-                                         'VALUES (?, ?);', (_nome, _created))
-            if resultado:
-                db.commit()
-                db.close()
+            if _nome and _created:
+                executor = db.cursor()
+                resultado = executor.execute('INSERT INTO users (nome, created) '
+                                             'VALUES (?, ?);', (_nome, _created))
+                if resultado:
+                    db.commit()
+                    db.close()
         except Exception as erro:
             print(erro)
         if not db:
@@ -92,20 +93,15 @@ class G6RDB:
     def return_data(self, _table, _nome=None):
         resultado = None
         db = self.connect_db()
-        try:
-            executor = db.cursor()
-            if _nome:
-                resultado = executor.execute("SELECT * FROM users WHERE nome=?;", (_nome,))
-            else:
-                resultado = executor.execute(f"SELECT * FROM {_table};")
-        except Exception as erro:
-            print(erro)
-            return False
+        executor = db.cursor()
+        if _nome:
+            resultado = executor.execute("SELECT * FROM users WHERE nome=?;", (_nome,))
+        else:
+            resultado = executor.execute(f"SELECT * FROM {_table};")
+        if resultado:
+            return executor.fetchall()
         if not db:
             raise ConnectionError(f'Erro ao conectar a db!\nconnection_result:{db}')
-        elif resultado:
-            dados = executor.fetchall()
-            return dados
 
     def delete_data(self, _nome):
         db = self.connect_db()
@@ -125,4 +121,4 @@ class G6RDB:
 
 if __name__ == '__main__':
     _db = G6RDB()
-    print(_db.return_data(_table='users'))
+    print(len(_db.return_data(_table='users')))
