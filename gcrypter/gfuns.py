@@ -30,8 +30,8 @@ def decrypt(p: int, q: int):
 def debugpath() -> str:
     if name == 'posix':
         home = getoutput('echo $HOME')
-        return path.join(home, '.gcr-debug')
-    return '.gcr-debug'
+        return path.join(home, '.g6r-debug')
+    return '.g6r-debug'
 
 
 def perfilnome(_folder: str) -> str or None:
