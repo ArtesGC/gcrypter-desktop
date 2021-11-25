@@ -1,24 +1,22 @@
 [DEBREATE-0.7.13]
 <<CTRL>>
 Package: gcrypter
-Version: 0.7-042021
+Version: 0.9-112021
 Maintainer: ArtesGC <nuruldecarvalho@gmail.com>
 Section: text
 Architecture: amd64
 Priority: standard
-Description: encoder and decoder
- allow you to encode and decode your thoughts
+Description: encrypter and decrypter
+ allow you to encrypt and decrypt your thoughts easily
 
 <</CTRL>>
 <<FILES>>
 1
-/home/nurul-gc/PycharmProjects/GCrypter/img/gcrypter.png* -> gcrypter.png -> /usr/share/gcrypter/img
-/home/nurul-gc/PycharmProjects/GCrypter/img/gcrypter-icon.png* -> gcrypter-icon.png -> /usr/share/gcrypter/img
-/home/nurul-gc/PycharmProjects/GCrypter/img/alhamdulillah2.jpg* -> alhamdulillah2.jpg -> /usr/share/gcrypter/img
-/home/nurul-gc/PycharmProjects/GCrypter/img/Deus.jpg* -> Deus.jpg -> /usr/share/gcrypter/img
-/home/nurul-gc/PycharmProjects/GCrypter/img/004.png -> 004.png -> /usr/share/gcrypter/img
-/home/nurul-gc/PycharmProjects/GCrypter/themes/gc-manjaromix.qss -> /usr/share/gcrypter/themes
-/home/nurul-gc/PycharmProjects/GCrypter/GCrypter* -> GCrypter -> /usr/share/gcrypter
+/home/nurul-gc/Projects/PycharmProjects/GCrypter/dist/gcrypter* -> gcrypter -> /usr/share/gcrypter/
+/home/nurul-gc/Projects/PycharmProjects/GCrypter/gcrypter/g6r-fonts -> g6r-fonts -> /usr/share/gcrypter/
+/home/nurul-gc/Projects/PycharmProjects/GCrypter/gcrypter/g6r-icons -> g6r-icons -> /usr/share/gcrypter/
+/home/nurul-gc/Projects/PycharmProjects/GCrypter/gcrypter/g6r-themes -> g6r-themes -> /usr/share/gcrypter/
+/home/nurul-gc/Projects/PycharmProjects/GCrypter/LICENSE -> LICENSE -> /usr/share/gcrypter/
 <</FILES>>
 <<SCRIPTS>>
 <<PREINST>>
@@ -28,13 +26,13 @@ Description: encoder and decoder
 1
 #! /bin/bash -e
 
-ln -fs "/usr/share/gcrypter/GCrypter" "/usr/bin/GCrypter"
+ln -fs "/usr/share/gcrypter/gcrypter" "/usr/bin/gcrypter"
 <</POSTINST>>
 <<PRERM>>
 1
 #! /bin/bash -e
 
-rm -f "/usr/bin/GCrypter"
+rm -f "/usr/bin/gcrypter"
 <</PRERM>>
 <<POSTRM>>
 0
@@ -42,27 +40,32 @@ rm -f "/usr/bin/GCrypter"
 <</SCRIPTS>>
 <<CHANGELOG>>
 <<DEST>>DEFAULT<</DEST>>
-gcrypter (0.7-042021) focal; urgency=low
+gcrypter (0.9-112021) ; urgency=low
 
+  * CHANGELOG - GCrypter
   * v0.1
-    * when everything started as MyDiary
+  	* when everything started as MyDiary
   * v0.2
-    * ...
+  	* Minor bugs and layout enhancement.
   * v0.3
-    * ...
+  	* Minor bugs and layout enhancement.
   * v0.4
-    * ...
+  	* Minor bugs and layout enhancement.
   * v0.5
-    * layout improved and changed the encrypter algoritmn
+  	* layout improved and changed the encrypter algoritmn
   * [v0.6](https://github.com/ArtesGC/GCrypter/releases/tag/v0.6)
-    * some bugs fixed and improved the layout!
+  	* some bugs fixed and improved the layout!
   * [v0.7](https://github.com/ArtesGC/GCrypter/releases/tag/v0.7)
-    * improved the layout, fixed some bugs, added the English support!
+  	* improved the layout, fixed some bugs, added the English support!
   * [v0.8](https://github.com/ArtesGC/GCrypter/releases/tag/v0.8)
-    * update the layout and images, fixed some silly bugs!
-    * update open-source LICENSE from BSL to BSD!
+  	* update the layout and images, fixed some silly bugs!
+  	* update open-source LICENSE from BSL to BSD!
+  * [v0.9](https://github.com/ArtesGC/GCrypter/releases/tag/v0.9)
+  	* updated the layout and images.
+  	* optimized and refactored the source code.
+  	* enhaced the functions.
 
- -- ArtesGC <nuruldecarvalho@gmail.com>  Sat, 01 May 2021 05:02:30 +0200
+ -- ArtesGC <nuruldecarvalho@gmail.com>  Thu, 25 Nov 2021 22:21:33 +0200
 
 <</CHANGELOG>>
 <<COPYRIGHT>>
@@ -95,28 +98,27 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 <</COPYRIGHT>>
 <<MENU>>
 1
 Name=GCrypter
 Version=1.0
-Exec=/usr/share/gcrypter/GCrypter
-Comment=an easy way to encode and decode your thoughts!
-Icon=/usr/share/gcrypter/img/gcrypter-icon.png
+Exec=/usr/share/gcrypter/gcrypter
+Comment=Encrypt and Decrypt your thoughts easily
+Icon=/usr/share/gcrypter/g6r-icons/favicons/favicon-192x192.png
 Type=Application
 Terminal=false
 StartupNotify=true
 Encoding=UTF-8
-Categories=Security;Utility;TextEditor;
-Comment[PT]=uma forma simples de manter os seus pensamentos seguros!
-GenericName=Encrypt & Decrypt Messages
-MimeType=application/x-gc;
+Categories=TextEditor;Utility;Security;
 Path=/usr/share/gcrypter/
-StartupWMClass=GCrypt
+GenericName=GCrypter
+StartupWMClass=gcrypter
 <</MENU>>
 <<BUILD>>
 1
 1
-1
+0
 strip
 <</BUILD>>
