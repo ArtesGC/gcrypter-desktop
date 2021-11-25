@@ -11,16 +11,14 @@ from PyQt6.QtWidgets import *
 from gcrypter.db import G6RDB
 from gcrypter.gfuns import debugpath, encrypt, decrypt, created, logged, localpath
 
-theme = open(f'{localpath()}/g6r-themes/g6rlight.qss').read().strip()
-
 
 class PT:
     def __init__(self):
         self.ferramentas = QDialog()
-        self.ferramentas.setFixedSize(QSize(500, 500))
+        self.ferramentas.setFocus()
+        self.ferramentas.setFixedSize(QSize(450, 450))
         self.ferramentas.setWindowTitle('GCrypter')
-        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/g6r-icons/favicon-192x192.png'))
-        self.ferramentas.setStyleSheet(theme)
+        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/g6r-icons/favicons/favicon-192x192.png'))
 
         # layout
         layout = QVBoxLayout()
@@ -30,8 +28,8 @@ class PT:
         layout.setMenuBar(menu)
         detalhes = menu.addMenu('&Ajuda')
 
-        lang = detalhes.addAction('&Idioma')
-        lang.triggered.connect(self._lang)
+        lang = detalhes.addAction('&Cofigurações')
+        lang.triggered.connect(self._config)
 
         instr = detalhes.addAction('&Instruções')
         instr.triggered.connect(self._instr)
@@ -67,7 +65,7 @@ class PT:
         self.moldura_decodificar = None
 
         self.ferramentas.setLayout(layout)
-        self.usuarios_cadastrados()
+        self.inicio_sessao()
 
     # getters and setters
     def perfilframe(self, _nome: str, _created: str, _lastlogin: str) -> QFrame:
@@ -147,31 +145,36 @@ Faça Bom Proveito!<br><br>
 ™ ArtesGC, Inc.</b>
 """)
 
-    def _lang(self):
+    def _config(self):
         def alterar():
             try:
-                self.gdb.update_config(_lang=escolha_idioma.currentText())
-                QMessageBox.information(self.ferramentas, 'Sucessso', 'O idioma definido será carregado após o reinício do programa!')
+                self.gdb.update_config(_lang=escolha_idioma.currentText(), _theme=escolha_temas.currentText())
+                QMessageBox.information(self.ferramentas, 'Sucessso', 'As modificações definidas serão carregadas após o reinício do programa!')
                 janela.close()
             except Exception as erro:
                 QMessageBox.warning(self.ferramentas, 'Aviso', f'Enquanto processava o seu pedido, o seguinte erro foi encontrado:\n- {erro}')
 
         janela = QDialog(self.ferramentas)
-        janela.setWindowTitle('Idioma')
-        janela.setFixedSize(QSize(300, 200))
-        layout = QVBoxLayout()
+        janela.setWindowTitle('Configurações')
 
-        labelInfo = QLabel('<h3>Escolha o idioma:</h3>')
-        layout.addWidget(labelInfo)
+        layout = QFormLayout()
+        layout.setSpacing(10)
 
         idiomas = ['Portugues', 'English']
         escolha_idioma = QComboBox()
         escolha_idioma.addItems(idiomas)
-        layout.addWidget(escolha_idioma)
+        layout.addRow('Escolha o &Idioma:', escolha_idioma)
+
+        temas = ['Light', 'Dark']
+        escolha_temas = QComboBox()
+        escolha_temas.addItems(temas)
+        layout.addRow('Escolha o &Tema:', escolha_temas)
 
         btnSalvar = QPushButton('Salvar')
         btnSalvar.clicked.connect(alterar)
-        layout.addWidget(btnSalvar)
+        layout.addRow(btnSalvar)
+        layout.addRow(QLabel('<small><ul><li>O botão para salvar captura ambas as escolhas, '
+                             'por favor certifique-se de defini-las antes de pressiona-lo!</li></ul></small>'))
 
         janela.setLayout(layout)
         janela.show()
@@ -205,7 +208,7 @@ RESPOSTA: {resposta.text()}"""
                                             f"agora inicie sessão para disfrutar do programa..")
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Preencha os Seus Dados:</h3>"))
@@ -252,7 +255,7 @@ RESPOSTA: {resposta.text()}"""
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Preencha os Seus Dados:</h3>"))
@@ -313,7 +316,7 @@ RESPOSTA: {resposta.text()}"""
         layout.addSpacing(10)
         layout.addWidget(QLabel("<h2>Inicio Rapido:</h2>"))
 
-        if len(self.gdb.return_data(_table='users')) > 0:
+        if len(self.gdb.return_data(_table='users')) >= 1:
             for user in self.gdb.return_data(_table='users'):
                 nomeusuario = user[1]
                 criada = user[2]
@@ -335,7 +338,7 @@ RESPOSTA: {resposta.text()}"""
         layout = QFormLayout()
         layout.setSpacing(30)
 
-        layout.addRow(QLabel("<h2>Preencha os Seus Dados:</h2>"))
+        layout.addRow(QLabel("<h2>Preencha os Seus Dados<br>Para Iniciar Sessão:</h2>"))
 
         def iniciar():
             try:
@@ -409,42 +412,42 @@ RESPOSTA: {resposta.text()}"""
             return self.principal()
 
     def principal(self):
+        self.ferramentas.setFixedSize(QSize(800, 600))
         self.moldura_principal = QFrame()
         self.tab.addTab(self.moldura_principal, 'Bem-Vindo')
         self.tab.setCurrentWidget(self.moldura_principal)
-        self.ferramentas.setFixedSize(QSize(650, 650))
 
-        layout = QFormLayout()
+        layout = QVBoxLayout()
 
         intro = QLabel('<h3><i>"Mesmo que nada esteje bem, certifica-te que tudo corra bem..<br>'
                        'DEUS TE OFERECEU MAIS UM DIA, APROVEITE AO MAXIMO!"</i></h3>')
         intro.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(intro)
+        layout.addWidget(intro)
 
         image = QLabel()
-        image.setPixmap(QPixmap(f'{localpath()}/gcr-icons/02.jpg'))
+        image.setPixmap(QPixmap(f'{localpath()}/g6r-icons/02.jpg'))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(image)
+        layout.addWidget(image)
 
         rotulo = QLabel('<h2>Selecione uma Operação a Executar</h2>')
         rotulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(rotulo)
+        layout.addWidget(rotulo)
 
         vis_botao = QPushButton('Pré-visualizar Criptografia')
         vis_botao.clicked.connect(self._visualizar)
-        layout.addRow(vis_botao)
+        layout.addWidget(vis_botao)
 
         cod_botao = QPushButton('Codificar')
         cod_botao.clicked.connect(self._codificar)
-        layout.addRow(cod_botao)
+        layout.addWidget(cod_botao)
 
         dec_botao = QPushButton('Decodificar')
         dec_botao.clicked.connect(self._decodificar)
-        layout.addRow(dec_botao)
+        layout.addWidget(dec_botao)
 
         editar_botao = QPushButton('Editar')
         editar_botao.clicked.connect(self._editar)
-        layout.addRow(editar_botao)
+        layout.addWidget(editar_botao)
 
         self.moldura_principal.setLayout(layout)
 
