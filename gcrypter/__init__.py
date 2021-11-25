@@ -29,9 +29,9 @@ class G6R:
         # application font
         QFontDatabase.addApplicationFont(f"{localpath()}/g6r-fonts/Abel.ttf")
 
-        img = QPixmap(f"{localpath()}/g6r-icons/gcrypter-logo-01.png").scaled(QSize(500, 500))
-        self.align = int(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignAbsolute)
-        self.color = Qt.GlobalColor.darkGreen
+        img = QPixmap(f"{localpath()}/g6r-icons/favicons/favicon-512x512.png")
+        self.align = int(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignAbsolute)
+        self.color = Qt.GlobalColor.green
 
         self.janela = QSplashScreen(img)
         self.janela.setStyleSheet(theme)
@@ -44,33 +44,40 @@ class G6R:
             self.janela.showMessage(f"Loading ... {load}%", self.align, self.color)
             sleep(0.5)
             load += randint(1, 10)
-        if path.exists(f"{debugpath()}/gcrypter.db"):
-            config = G6RDB().return_data(_table='config')[0]
-            if config[1] == 'English':
-                app = EN()
-                self.janela.close()
-                app.ferramentas.show()
-            elif config[1] == 'Portugues':
-                app = PT()
-                self.janela.close()
-                app.ferramentas.show()
-            else:
-                perg = QMessageBox.question(self.janela, "X_X", "- Am sorry, the language set in your database is unsupported, Would you like to reconfigure it?\n\n"
-                                                                "- Lamento, o idioma definido na sua base de dados não é suportada, Desejaria reconfigura-la?")
-                if perg == QMessageBox.StandardButton.Yes:
-                    G6RDB().update_config(_lang='English')
-                    QMessageBox.information(self.janela, "^_^", "🤓👌🏽")
-                return after(_sec=10, _do=exit(0))
-        else:
+
+        if lang == 'English':
             app = EN()
             self.janela.close()
+            app.ferramentas.setStyleSheet(theme)
             app.ferramentas.show()
+        elif lang == 'Portugues':
+            app = PT()
+            self.janela.close()
+            app.ferramentas.setStyleSheet(theme)
+            app.ferramentas.show()
+        else:
+            perg = QMessageBox.question(self.janela, "X_X", "- Am sorry, the language set in your database is unsupported, Would you like to reconfigure it?\n\n"
+                                                            "- Lamento, o idioma definido na sua base de dados não é suportada, Desejaria reconfigura-la?")
+            if perg == QMessageBox.StandardButton.Yes:
+                gdb.update_config(_lang='English')
+                QMessageBox.information(self.janela, "^_^", "🤓👌🏽")
+            return after(_sec=10, _do=exit(0))
 
 
 if __name__ == '__main__':
     makedirs(debugpath(), exist_ok=True)
-    G6RDB().update_config(_lang='English')
-    G6RDB().insert_user()
-    theme = open('g6r-themes/g6rlight.qss').read().strip()
+
+    gdb = G6RDB()
+    if not path.exists(f"{debugpath()}/gcrypter.db"):
+        gdb.update_config(_lang='English', _theme='Light')
+        gdb.insert_user()
+
+    lang = gdb.return_data(_table='config')[0][1]
+    theme = gdb.return_data(_table='config')[0][2]
+    if theme == 'Dark':
+        theme = open(f"{localpath()}/g6r-themes/g6rdark.qss").read().strip()
+    else:
+        theme = open(f"{localpath()}/g6r-themes/g6rlight.qss").read().strip()
+
     gcApp = G6R()
     gcApp.gc.exec()
