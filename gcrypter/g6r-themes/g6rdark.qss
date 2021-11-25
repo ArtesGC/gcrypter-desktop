@@ -16,7 +16,6 @@ QWidget,  QDialog {
 QFrame{
     background-color: #151a1e;
     border-radius: 3px;
-    padding: 10px;
 }
 
 QCalendar {
@@ -153,6 +152,7 @@ QLineEdit {
 
 QLabel {
     color: #FFFFFF /*#d3dae3*/;
+    padding: 5px;
 }
 
 QLCDNumber {
