@@ -11,16 +11,14 @@ from PyQt6.QtWidgets import *
 from gcrypter.db import G6RDB
 from gcrypter.gfuns import debugpath, encrypt, decrypt, created, logged, localpath
 
-theme = open(f'{localpath()}/g6r-themes/g6rlight.qss').read().strip()
-
 
 class EN:
     def __init__(self):
         self.ferramentas = QDialog()
-        self.ferramentas.setFixedSize(QSize(500, 500))
+        self.ferramentas.setFocus()
+        self.ferramentas.setFixedSize(QSize(450, 450))
         self.ferramentas.setWindowTitle('GCrypter')
-        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/g6r-icons/favicon-192x192.png'))
-        self.ferramentas.setStyleSheet(theme)
+        self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/g6r-icons/favicons/favicon-192x192.png'))
 
         # layout
         layout = QVBoxLayout()
@@ -30,8 +28,8 @@ class EN:
         layout.setMenuBar(menu)
         detalhes = menu.addMenu('&Help')
 
-        lang = detalhes.addAction('&Language')
-        lang.triggered.connect(self._lang)
+        lang = detalhes.addAction('&Settings')
+        lang.triggered.connect(self._config)
 
         instr = detalhes.addAction('&Instructions')
         instr.triggered.connect(self._instr)
@@ -67,7 +65,7 @@ class EN:
         self.moldura_decodificar = None
 
         self.ferramentas.setLayout(layout)
-        self.usuarios_cadastrados()
+        self.inicio_sessao()
 
     # getters and setters
     def perfilframe(self, _nome: str, _created: str, _lastlogin: str) -> QFrame:
@@ -147,31 +145,36 @@ Enjoy!<br><br>
 ™ ArtesGC, Inc.</b>
 """)
 
-    def _lang(self):
+    def _config(self):
         def alterar():
             try:
-                self.gdb.update_config(_lang=escolha_idioma.currentText())
-                QMessageBox.information(self.ferramentas, 'Successsful', 'The language set will be loaded after restart the program!')
+                self.gdb.update_config(_lang=escolha_idioma.currentText(), _theme=escolha_temas.currentText())
+                QMessageBox.information(self.ferramentas, 'Successsful', 'The modifications will be set after restart the program!')
                 janela.close()
             except Exception as erro:
                 QMessageBox.warning(self.ferramentas, 'Warning', f'While processing your request the following error was found:\n- {erro}')
 
         janela = QDialog(self.ferramentas)
-        janela.setWindowTitle('Language')
-        janela.setFixedSize(QSize(300, 200))
-        layout = QVBoxLayout()
+        janela.setWindowTitle('Settings')
 
-        labelInfo = QLabel('<h3>Choose the language:</h3>')
-        layout.addWidget(labelInfo)
+        layout = QFormLayout()
+        layout.setSpacing(10)
 
         idiomas = ['Portugues', 'English']
         escolha_idioma = QComboBox()
         escolha_idioma.addItems(idiomas)
-        layout.addWidget(escolha_idioma)
+        layout.addRow('Choose the &Language:', escolha_idioma)
+
+        temas = ['Light', 'Dark']
+        escolha_temas = QComboBox()
+        escolha_temas.addItems(temas)
+        layout.addRow('Choose the &Theme:', escolha_temas)
 
         btnSalvar = QPushButton('Save')
         btnSalvar.clicked.connect(alterar)
-        layout.addWidget(btnSalvar)
+        layout.addRow(btnSalvar)
+        layout.addRow(QLabel('<small><ul><li>The save button retrieve both of the choices, '
+                             'please make sure to set both of them before push it!</li></ul></small>'))
 
         janela.setLayout(layout)
         janela.show()
@@ -205,7 +208,7 @@ ANSWER: {resposta.text()}"""
                                             f"now log in to enjoy the program..")
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
@@ -252,7 +255,7 @@ ANSWER: {resposta.text()}"""
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/gcr-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
@@ -313,7 +316,7 @@ ANSWER: {resposta.text()}"""
         layout.addSpacing(10)
         layout.addWidget(QLabel("<h2>Quick Login:</h2>"))
 
-        if len(self.gdb.return_data(_table='users')) > 0:
+        if len(self.gdb.return_data(_table='users')) >= 1:
             for user in self.gdb.return_data(_table='users'):
                 nomeusuario = user[1]
                 criada = user[2]
@@ -335,7 +338,7 @@ ANSWER: {resposta.text()}"""
         layout = QFormLayout()
         layout.setSpacing(30)
 
-        layout.addRow(QLabel("<h2>Fill Your Details:</h2>"))
+        layout.addRow(QLabel("<h2>Fill Your Details<br>To Login:</h2>"))
 
         def iniciar():
             try:
@@ -409,42 +412,42 @@ ANSWER: {resposta.text()}"""
             return self.principal()
 
     def principal(self):
+        self.ferramentas.setFixedSize(QSize(800, 600))
         self.moldura_principal = QFrame()
         self.tab.addTab(self.moldura_principal, 'Welcome')
         self.tab.setCurrentWidget(self.moldura_principal)
-        self.ferramentas.setFixedSize(QSize(650, 650))
 
-        layout = QFormLayout()
+        layout = QVBoxLayout()
 
         intro = QLabel('<h3><i>"Even if nothing is right, make sure everything goes well..<br>'
                        'GOD OFFERED YOU ANOTHER DAY, ENJOY IT!"</i></h3>')
         intro.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(intro)
+        layout.addWidget(intro)
 
         image = QLabel()
-        image.setPixmap(QPixmap(f'{localpath()}/gcr-icons/02.jpg'))
+        image.setPixmap(QPixmap(f'{localpath()}/g6r-icons/02.jpg'))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(image)
+        layout.addWidget(image)
 
-        rotulo = QLabel('<h2>Select the Operation to Perform</h2>')
+        rotulo = QLabel('<h2>Select an Operation to Perform</h2>')
         rotulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addRow(rotulo)
+        layout.addWidget(rotulo)
 
         vis_botao = QPushButton('Preview Encryption')
         vis_botao.clicked.connect(self._visualizar)
-        layout.addRow(vis_botao)
+        layout.addWidget(vis_botao)
 
-        cod_botao = QPushButton('Encode')
+        cod_botao = QPushButton('Encrypt')
         cod_botao.clicked.connect(self._codificar)
-        layout.addRow(cod_botao)
+        layout.addWidget(cod_botao)
 
-        dec_botao = QPushButton('Decode')
+        dec_botao = QPushButton('Decrypt')
         dec_botao.clicked.connect(self._decodificar)
-        layout.addRow(dec_botao)
+        layout.addWidget(dec_botao)
 
         editar_botao = QPushButton('Edit')
         editar_botao.clicked.connect(self._editar)
-        layout.addRow(editar_botao)
+        layout.addWidget(editar_botao)
 
         self.moldura_principal.setLayout(layout)
 
