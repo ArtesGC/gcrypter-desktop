@@ -16,7 +16,6 @@ QWidget,  QDialog {
 QFrame{
     background-color: gray /*#151a1e*/;
     border-radius: 3px;
-    padding: 10px;
 }
 
 QCalendar {
@@ -27,7 +26,7 @@ QTextEdit {
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
     color: black /*#d3dae3*/;
     padding: 5px;
     border-radius: 5px;
@@ -37,7 +36,7 @@ QPlainTextEdit {
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
     color: black /*#d3dae3*/;
     padding: 5px;
     border-radius: 5px;
@@ -153,6 +152,7 @@ QLineEdit {
 
 QLabel {
     color: black /*#d3dae3*/;
+    padding: 5px;
 }
 
 QLCDNumber {
@@ -205,7 +205,7 @@ QMenu::item {
 
 QTabWidget {
     color: rgb(0,0,0);
-    background-color:#000000;
+    background-color: #000000;
 }
 
 QTabWidget::pane {
@@ -286,7 +286,8 @@ QTabBar::tab:selected, QTabBar::tab:first:selected, QTabBar::tab:hover {
 }
 
 QCheckBox {
-    color: #d3dae3;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     padding: 5px;
     border-radius: 5px;
     border-width: 1px;
@@ -328,7 +329,8 @@ QCheckBox::indicator:unchecked {
 }
 
 QRadioButton {
-    color: #d3dae3;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     padding: 5px;
     border-radius: 5px;
     border-width: 1px;
@@ -360,60 +362,60 @@ QRadioButton::indicator:unchecked {
 }
 
 QStatusBar {
-    color:#027f7f;
+    color: #027f7f;
 }
 
 QSpinBox {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
 }
 
 QDoubleSpinBox {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
 }
 
 QTimeEdit {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
 }
 
 QDateTimeEdit {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
 }
 
 QDateEdit {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
 }
 
 QFontComboBox {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
 }
 
 QComboBox {
-    color: #d3dae3;
-    background-color: #222b2e;
+    background-color: white /*#222b2e*/;
+    color: black /*#d3dae3*/;
     border-width: 1px;
     border-style: solid;
     border-color: #4fa08b;
@@ -421,7 +423,7 @@ QComboBox {
 }
 
 QDial {
-    background: #16a085;
+    background-color: #16a085;
 }
 
 QToolBox {
@@ -431,17 +433,17 @@ QToolBox {
 
 QToolBox::tab {
     color: #a9b7c6;
-    background-color:#222b2e;
+    background-color: #222b2e;
 }
 
 QToolBox::tab:selected {
     color: #FFFFFF;
-    background-color:#222b2e;
+    background-color: #222b2e;
 }
 
 QScrollArea {
     color: #FFFFFF;
-    background-color:#222b2e;
+    background-color: #222b2e;
 }
 
 QSlider::groove:horizontal {
@@ -455,7 +457,7 @@ QSlider::groove:vertical {
 }
 
 QSlider::handle:horizontal {
-    background: #1a2224;
+    background-color: #1a2224;
     border-style: solid;
     border-width: 1px;
     border-color: rgb(207,207,207);
@@ -465,7 +467,7 @@ QSlider::handle:horizontal {
 }
 
 QSlider::handle:vertical {
-    background: #1a2224;
+    background-color: #1a2224;
     border-style: solid;
     border-width: 1px;
     border-color: rgb(207,207,207);
@@ -475,11 +477,11 @@ QSlider::handle:vertical {
 }
 
 QSlider::add-page:horizontal {
-    background: #52595d;
+    background-color: #52595d;
 }
 
 QSlider::add-page:vertical {
-    background: #52595d;
+    background-color: #52595d;
 }
 
 QSlider::sub-page:horizontal {
@@ -494,39 +496,39 @@ QScrollBar:horizontal {
     max-height: 10px;
     border: 1px transparent gray;
     margin: 0px 20px 0px 20px;
-    background: transparent;
+    background-color: transparent;
 }
 
 QScrollBar:vertical {
     max-width: 10px;
     border: 1px transparent gray;
     margin: 20px 0px 20px 0px;
-    background: transparent;
+    background-color: transparent;
 }
 
 QScrollBar::handle:horizontal {
-    background: #52595d;
+    background-color: #52595d;
     border-style: transparent;
     border-radius: 4px;
     min-width: 25px;
 }
 
 QScrollBar::handle:horizontal:hover {
-    background: #58a492;
+    background-color: #58a492;
     border-style: transparent;
     border-radius: 4px;
     min-width: 25px;
 }
 
 QScrollBar::handle:vertical {
-    background: #52595d;
+    background-color: #52595d;
     border-style: transparent;
     border-radius: 4px;
     min-height: 25px;
 }
 
 QScrollBar::handle:vertical:hover {
-    background: #58a492;
+    background-color: #58a492;
     border-style: transparent;
     border-radius: 4px;
     min-height: 25px;
@@ -536,7 +538,7 @@ QScrollBar::add-line:horizontal {
    border: 2px transparent gray;
    border-top-right-radius: 4px;
    border-bottom-right-radius: 4px;
-   background: #15433a;
+   background-color: #15433a;
    width: 20px;
    subcontrol-position: right;
    subcontrol-origin: margin;
@@ -546,7 +548,7 @@ QScrollBar::add-line:horizontal:pressed {
    border: 2px transparent gray;
    border-top-right-radius: 4px;
    border-bottom-right-radius: 4px;
-   background: rgb(181,181,181);
+   background-color: rgb(181,181,181);
    width: 20px;
    subcontrol-position: right;
    subcontrol-origin: margin;
@@ -556,7 +558,7 @@ QScrollBar::add-line:vertical {
    border: 2px transparent gray;
    border-bottom-left-radius: 4px;
    border-bottom-right-radius: 4px;
-   background: #15433a;
+   background-color: #15433a;
    height: 20px;
    subcontrol-position: bottom;
    subcontrol-origin: margin;
@@ -576,7 +578,7 @@ QScrollBar::sub-line:horizontal {
    border: 2px transparent gray;
    border-top-left-radius: 4px;
    border-bottom-left-radius: 4px;
-   background: #15433a;
+   background-color: #15433a;
    width: 20px;
    subcontrol-position: left;
    subcontrol-origin: margin;
@@ -586,7 +588,7 @@ QScrollBar::sub-line:horizontal:pressed {
    border: 2px transparent gray;
    border-top-left-radius: 4px;
    border-bottom-left-radius: 4px;
-   background: rgb(181,181,181);
+   background-color: rgb(181,181,181);
    width: 20px;
    subcontrol-position: left;
    subcontrol-origin: margin;
@@ -596,7 +598,7 @@ QScrollBar::sub-line:vertical {
    border: 2px transparent gray;
    border-top-left-radius: 4px;
    border-top-right-radius: 4px;
-   background: #15433a;
+   background-color: #15433a;
    height: 20px;
    subcontrol-position: top;
    subcontrol-origin: margin;
@@ -606,16 +608,16 @@ QScrollBar::sub-line:vertical:pressed {
    border: 2px transparent gray;
    border-top-left-radius: 4px;
    border-top-right-radius: 4px;
-   background: rgb(181,181,181);
+   background-color: rgb(181,181,181);
    height: 20px;
    subcontrol-position: top;
    subcontrol-origin: margin;
 }
 
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-   background: none;
+   background-color: none;
 }
 
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-   background: none;
+   background-color: none;
 }
