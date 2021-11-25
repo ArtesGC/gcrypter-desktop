@@ -50,24 +50,26 @@ class G6RDB:
             raise ConnectionError(f'Erro ao conectar a db!\nconnection_result:{db}')
         return True
 
-    def update_config(self, _lang):
+    def update_config(self, _lang=None, _theme=None):
         db = self.connect_db()
         sql_value = "CREATE TABLE IF NOT EXISTS config" \
                     "(id integer primary key," \
-                    " lang varchar(20) not null);"
+                    " lang varchar(20) not null," \
+                    " theme varchar(10) not null);"
         try:
             self.create_table(_sql_value=sql_value)
             executor = db.cursor()
-            if len(self.return_data(_table='config')) >= 1:
-                resultado = executor.execute("UPDATE config SET lang=? "
-                                             "WHERE id=1;", (_lang,))
-            else:
-                resultado = executor.execute("INSERT INTO config (lang) "
-                                             "VALUES (?);", (_lang,))
+            if _lang and _theme:
+                if len(self.return_data(_table='config')) >= 1:
+                    resultado = executor.execute("UPDATE config SET lang=?, theme=? "
+                                                 "WHERE id=1;", (_lang, _theme))
+                else:
+                    resultado = executor.execute("INSERT INTO config (lang, theme) "
+                                                 "VALUES (?,?);", (_lang, _theme))
 
-            if resultado:
-                db.commit()
-                db.close()
+                if resultado:
+                    db.commit()
+                    db.close()
         except Exception as erro:
             print(erro)
         if not db:
