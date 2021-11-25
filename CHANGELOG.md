@@ -3,11 +3,11 @@
 - v0.1
     - when everything started as MyDiary
 - v0.2
-    - ...
+    - Minor bugs and layout enhancement.
 - v0.3
-    - ...
+    - Minor bugs and layout enhancement.
 - v0.4
-    - ...
+    - Minor bugs and layout enhancement.
 - v0.5
     - layout improved and changed the encrypter algoritmn
 - [v0.6](https://github.com/ArtesGC/GCrypter/releases/tag/v0.6)
@@ -17,3 +17,7 @@
 - [v0.8](https://github.com/ArtesGC/GCrypter/releases/tag/v0.8)
     - update the layout and images, fixed some silly bugs!
     - update open-source LICENSE from BSL to BSD!
+- [v0.9](https://github.com/ArtesGC/GCrypter/releases/tag/v0.9)
+    - updated the layout and images.
+    - optimized and refactored the source code.
+    - enhaced the functions.
