@@ -119,8 +119,3 @@ class G6RDB:
             return False
         if not db:
             raise ConnectionError(f'Erro ao conectar a db!\nconnection_result:{db}')
-
-
-if __name__ == '__main__':
-    _db = G6RDB()
-    print(len(_db.return_data(_table='users')))
