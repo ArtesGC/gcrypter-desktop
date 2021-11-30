@@ -36,6 +36,7 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputDir="..\dist"
 OutputBaseFilename={#MyAppName}_{#MyAppVersion}-112021_amd64
 SetupIconFile="..\gcrypter\g6r-icons\favicons\favicon-256x256.ico"
+LicenseFile="..\LICENSE"
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -52,6 +53,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "..\dist\gcrypter.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\gcrypter\g6r-icons\*"; DestDir: "{app}\g6r-icons"; Flags: ignoreversion
+Source: "..\gcrypter\g6r-icons\favicons\*"; DestDir: "{app}\g6r-icons\favicons"; Flags: ignoreversion
 Source: "..\gcrypter\g6r-themes\*"; DestDir: "{app}\g6r-themes"; Flags: ignoreversion
 Source: "..\gcrypter\g6r-fonts\*"; DestDir: "{app}\g6r-fonts"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
