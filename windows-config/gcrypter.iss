@@ -35,14 +35,14 @@ UsedUserAreasWarning=no
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir="..\dist"
 OutputBaseFilename={#MyAppName}_{#MyAppVersion}-112021_amd64
-SetupIconFile="..\gcrypter\g6r-icons\favicons\favicon-256x256.ico
+SetupIconFile="..\gcrypter\g6r-icons\favicons\favicon-256x256.ico"
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "C:\Users\nurul\Documents\Projectos\GCrypter\LICENSE";
-Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "C:\Users\nurul\Documents\Projectos\GCrypter\LICENSE";
+Name: "english"; MessagesFile: "compiler:Default.isl";
+Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl";
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
