@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GCrypter"
-#define MyAppVersion "0.8"
+#define MyAppVersion "0.9"
 #define MyAppPublisher "ArtesGC, Inc."
 #define MyAppURL "https://artesgc.home.blog"
-#define MyAppExeName "GCrypter.exe"
+#define MyAppExeName "gcrypter.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -33,9 +33,9 @@ UsedUserAreasWarning=no
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir="C:\Users\nurul\Documents\Projectos\GCrypter\dist"
-OutputBaseFilename={#MyAppName}_{#MyAppVersion}-072021
-SetupIconFile="C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter-256x256.ico"
+OutputDir="..\dist"
+OutputBaseFilename={#MyAppName}_{#MyAppVersion}-112021_amd64
+SetupIconFile="..\gcrypter\g6r-icons\favicons\favicon-256x256.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -49,15 +49,11 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
 
 [Files]
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\dist\GCrypter.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\01.jpg"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\02.jpg"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\03.png"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter.png"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter-256x256.ico"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\img\gcrypter-icon.png"; DestDir: "{app}\img"; Flags: ignoreversion
-Source: "C:\Users\nurul\Documents\Projectos\GCrypter\themes\gc-manjaromix.qss"; DestDir: "{app}\themes"; Flags: ignoreversion
+Source: "..\dist\gcrypter.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\gcrypter\g6r-icons\*"; DestDir: "{app}\g6r-icons"; Flags: ignoreversion
+Source: "..\gcrypter\g6r-themes\*"; DestDir: "{app}\g6r-themes"; Flags: ignoreversion
+Source: "..\gcrypter\g6r-fonts\*"; DestDir: "{app}\g6r-fonts"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
