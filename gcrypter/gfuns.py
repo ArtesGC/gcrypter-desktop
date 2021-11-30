@@ -2,7 +2,7 @@
 #  (c) 2019-2021 Nurul-GC.                                                     *
 # ******************************************************************************
 from datetime import datetime
-from os import path, name
+from os import name, path
 from re import compile
 from secrets import token_bytes
 from subprocess import getoutput
