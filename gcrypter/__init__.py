@@ -39,11 +39,11 @@ class G6R:
         self.iniciar()
 
     def iniciar(self):
-        load = 0
-        while load < 100:
-            self.janela.showMessage(f"Loading ... {load}%", self.align, self.color)
+        load = ''
+        while len(load) < 100:
+            self.janela.showMessage(f"[ {load} ]", self.align, self.color)
             sleep(0.5)
-            load += randint(1, 10)
+            load += "|"*randint(1, 10)
 
         if lang == 'English':
             app = EN()
