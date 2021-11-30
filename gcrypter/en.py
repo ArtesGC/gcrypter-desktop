@@ -106,12 +106,7 @@ class EN:
 
     # menu-functions
     def _sair(self):
-        resp = QMessageBox.question(self.ferramentas, 'Quit Program', 'Thank you for use our software.\n'
-                                                                      'Please consider to visit our website and have a look to other options and services! - ArtesGC')
-        if resp == QMessageBox.StandardButton.Yes:
-            open_new('https://artesgc.home.blog')
-        else:
-            exit(0)
+        return exit(0)
 
     def _sobre(self):
         QMessageBox.information(self.ferramentas, "About", """<ul>
