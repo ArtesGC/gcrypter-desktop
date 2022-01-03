@@ -1,5 +1,5 @@
 import sqlite3
-from gcrypter.gfuns import debugpath
+from g6r.gfuns import debugpath
 
 
 class G6RDB:
