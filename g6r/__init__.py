@@ -16,10 +16,10 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
-from gcrypter.db import G6RDB
-from gcrypter.en import EN
-from gcrypter.gfuns import debugpath, localpath, after
-from gcrypter.pt import PT
+from g6r.db import G6RDB
+from g6r.en import EN
+from g6r.gfuns import debugpath, localpath, after
+from g6r.pt import PT
 
 
 class G6R:
