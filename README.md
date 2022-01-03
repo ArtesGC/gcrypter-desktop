@@ -1,7 +1,7 @@
 <div align="center">
 
   
-![gcrypter-icon](./gcrypter/g6r-icons/favicons/favicon-192x192.png)
+![gcrypter-icon](g6r/g6r-icons/favicons/favicon-192x192.png)
 
 [![Download GCrypter](https://img.shields.io/sourceforge/dt/gcrypter.svg)](https://sourceforge.net/projects/gcrypter/files/latest/download)
 
