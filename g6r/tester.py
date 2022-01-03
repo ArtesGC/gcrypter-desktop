@@ -5,7 +5,7 @@
 import unittest
 from datetime import datetime
 
-from gcrypter import db
+from g6r import db
 
 
 class MyTestCase(unittest.TestCase):
