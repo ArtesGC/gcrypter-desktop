@@ -1,15 +1,16 @@
 # ******************************************************************************
 #  (c) 2019-2021 Nurul-GC.                                                     *
 # ******************************************************************************
-from os import makedirs, listdir
+from os import makedirs
 from webbrowser import open_new
 
+from gcrypter import decrypt, encrypt
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
-from gcrypter.db import G6RDB
-from gcrypter.gfuns import debugpath, encrypt, decrypt, created, logged, localpath
+from g6r.db import G6RDB
+from g6r.gfuns import created, debugpath, localpath, logged
 
 
 class EN:
