@@ -204,7 +204,7 @@ ANSWER: {resposta.text()}"""
                                             f"now log in to enjoy the program..")
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.png"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
@@ -251,7 +251,7 @@ ANSWER: {resposta.text()}"""
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.png"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
@@ -334,7 +334,7 @@ ANSWER: {resposta.text()}"""
         layout = QFormLayout()
         layout.setSpacing(30)
 
-        layout.addRow(QLabel("<h2>Fill Your Details<br>To Login:</h2>"))
+        layout.addRow(QLabel("<h2>Fill in Your Details<br>To Login:</h2>"))
 
         def iniciar():
             try:
