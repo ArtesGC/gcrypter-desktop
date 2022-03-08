@@ -41,8 +41,8 @@ class G6R:
     def iniciar(self):
         load = ''
         while len(load) < 100:
-            self.janela.showMessage(f"[ {load} ]", self.align, self.color)
-            sleep(0.5)
+            self.janela.showMessage(f"{load}", self.align, self.color)
+            sleep(0.2)
             load += "|"*randint(1, 10)
 
         if lang == 'English':
