@@ -15,9 +15,8 @@ from g6r.gfuns import created, debugpath, localpath, logged
 
 class EN:
     def __init__(self):
-        self.ferramentas = QDialog()
-        self.ferramentas.setFocus()
-        self.ferramentas.setFixedSize(QSize(450, 450))
+        self.ferramentas = QWidget()
+        self.ferramentas.setFixedSize(500, 500)
         self.ferramentas.setWindowTitle('GCrypter')
         self.ferramentas.setWindowIcon(QIcon(f'{localpath()}/g6r-icons/favicons/favicon-192x192.png'))
 
@@ -204,7 +203,7 @@ ANSWER: {resposta.text()}"""
                                             f"now log in to enjoy the program..")
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.png"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
@@ -251,7 +250,7 @@ ANSWER: {resposta.text()}"""
         layout = QFormLayout()
 
         image = QLabel()
-        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.png"))
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg"))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addRow(image)
         layout.addRow(QLabel("<h3>Fill Your Details:</h3>"))
@@ -332,7 +331,11 @@ ANSWER: {resposta.text()}"""
         self.tab.addTab(janela_inicio, 'Home Session')
 
         layout = QFormLayout()
-        layout.setSpacing(30)
+
+        image = QLabel()
+        image.setPixmap(QPixmap(f"{localpath()}/g6r-icons/01.jpg").scaled(540/2, 365/2))
+        image.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addRow(image)
 
         layout.addRow(QLabel("<h2>Fill in Your Details<br>To Login:</h2>"))
 
@@ -340,7 +343,7 @@ ANSWER: {resposta.text()}"""
             try:
                 with open(f'{debugpath()}/G6r-{utilizador_is.text()}/user.log', 'r+') as file_user:
                     file_ = file_user.readlines()
-                    file = decrypt(int(file_[0]), int(file_[1]))
+                    file = decrypt(text_enc=(int(file_[0]), int(file_[1])))
                     if utilizador_is.text() in file and codigo.text() in file:
                         self.tab.removeTab(self.tab.currentIndex())
                         self.utilizador = utilizador_is.text()
@@ -421,7 +424,7 @@ ANSWER: {resposta.text()}"""
         layout.addWidget(intro)
 
         image = QLabel()
-        image.setPixmap(QPixmap(f'{localpath()}/g6r-icons/02.jpg'))
+        image.setPixmap(QPixmap(f'{localpath()}/g6r-icons/03.jpg'))
         image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(image)
 
